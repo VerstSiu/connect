@@ -54,8 +54,9 @@ data class ConnectState(
      *
      * @param isSuccess success status.
      * @param error error.
+     * @param retryCount retry count.
      */
-    internal fun disconnectComplete(isSuccess: Boolean = false, error: Throwable? = null) = ConnectState(STATE_DISCONNECT_COMPLETE, isSuccess, error)
+    internal fun disconnectComplete(isSuccess: Boolean = false, error: Throwable? = null, retryCount: Int = 0) = ConnectState(STATE_DISCONNECT_COMPLETE, isSuccess, error, retryCount)
 
     /**
      * Connecting retry.

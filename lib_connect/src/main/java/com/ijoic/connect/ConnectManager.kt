@@ -17,13 +17,17 @@
  */
 package com.ijoic.connect
 
+import java.lang.ref.WeakReference
+
 /**
  * Connect manager.
  *
  * @author verstsiu on 2018/4/27.
  * @version 1.0
  */
-class ConnectManager {
+class ConnectManager(handler: ConnectHandler? = null) {
+
+  private val refHandler = WeakReference(handler)
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> connect handler :start <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
 
@@ -92,14 +96,24 @@ class ConnectManager {
   /**
    * Connect enabled status.
    */
-  internal var isConnectEnabled = false
+  internal var connectEnabled = false
       private set
 
   /**
    * Connect paused status.
    */
-  internal var isConnectPaused = false
+  internal var connectPaused = false
       private set
+
+  /**
+   * Returns retry connect required status.
+   */
+  private fun isRetryConnectRequired(): Boolean {
+    val handler = refHandler.get() ?: return false
+    val maxRetry = handler.getMaxRetryCount()
+
+    return handler.isConnectRequired() && maxRetry != 0
+  }
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> connect state :end <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
 
@@ -107,18 +121,27 @@ class ConnectManager {
    * Connect.
    */
   fun connect() {
+    connectEnabled = true
+    val currentSate = state
+
+    if (currentSate == null) {
+      state = ConnectState.connecting
+      executeConnect()
+    }
   }
 
   /**
    * Disconnect.
    */
   fun disconnect() {
+    state ?: return
   }
 
   /**
    * Retry connect.
    */
   fun retryConnect() {
+    state ?: return
   }
 
   /**
@@ -127,6 +150,17 @@ class ConnectManager {
    * <p>This will close existing connection, and mark connect status to pause.</p>
    */
   fun pauseConnect() {
+    connectPaused = true
+    state ?: return
+  }
+
+  /**
+   * Resume connect.
+   *
+   * <p>This will close existing connection, and mark connect status to pause.</p>
+   */
+  fun resumeConnect() {
+    state ?: return
   }
 
   /**
@@ -137,6 +171,30 @@ class ConnectManager {
    * @param forceConnect force connect status.
    */
   fun refreshConnect(forceConnect: Boolean = false) {
+    state ?: return
+  }
+
+  /**
+   * Execute connect.
+   */
+  private fun executeConnect() {
+    refHandler.get()?.onConnect()
+  }
+
+  /**
+   * Execute disconnect.
+   */
+  private fun executeDisconnect() {
+    refHandler.get()?.onDisconnect()
+  }
+
+  /**
+   * Execute retry connect.
+   *
+   * @param retryCount retry count.
+   */
+  private fun executeRetryConnect(retryCount: Int) {
+    refHandler.get()?.onRetryConnect(retryCount)
   }
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> notify methods :start <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
@@ -145,6 +203,7 @@ class ConnectManager {
    * Notify connect success.
    */
   fun notifyConnectSuccess() {
+    state ?: return
   }
 
   /**
@@ -153,12 +212,14 @@ class ConnectManager {
    * @param error error.
    */
   fun notifyConnectError(error: Throwable? = null) {
+    state ?: return
   }
 
   /**
    * Notify disconnect success.
    */
   fun notifyDisconnectSuccess() {
+    state ?: return
   }
 
   /**
@@ -167,12 +228,14 @@ class ConnectManager {
    * @param error error.
    */
   fun notifyDisconnectError(error: Throwable? = null) {
+    state ?: return
   }
 
   /**
    * Server closed.
    */
   fun notifyServerClosed() {
+    state ?: return
   }
 
   /**
@@ -181,6 +244,7 @@ class ConnectManager {
    * @param error error.
    */
   fun notifyErrorClosed(error: Throwable? = null) {
+    state ?: return
   }
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> notify methods :end <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
