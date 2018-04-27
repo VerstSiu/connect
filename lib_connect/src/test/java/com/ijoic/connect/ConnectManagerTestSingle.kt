@@ -53,7 +53,7 @@ open class ConnectManagerTestSingle {
     return Pair(manager, handler)
   }
 
-  // Current:
+  // Test Cases:
   //                  Create
   // STATE          : null
   // SUCCESS        :
