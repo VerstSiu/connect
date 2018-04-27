@@ -1,0 +1,41 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        compileSdkVersion = 27
+        minSdkVersion = 15
+        targetSdkVersion = 27
+        versionCode = 1
+        versionName = "1.0"
+
+        kotlin_version = '1.2.30'
+
+        depend_kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+        depend_appCompatV7 = 'com.android.support:appcompat-v7:27.1.1'
+        depend_constraintLayout = 'com.android.support.constraint:constraint-layout:1.1.0'
+        depend_okhttp = 'com.squareup.okhttp3:okhttp:3.10.0'
+        depend_lifecycle = 'android.arch.lifecycle:extensions:1.1.0'
+    }
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
