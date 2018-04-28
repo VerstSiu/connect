@@ -20,7 +20,7 @@ package com.ijoic.connect
 import org.junit.Test
 
 /**
- * Connect manager test(single).
+ * Connect manager test(couple).
  *
  * @author verstsiu on 2018/4/27.
  * @version 1.0
