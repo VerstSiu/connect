@@ -626,7 +626,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
 
   // Current:
   //
-  //                  Create -> Connect    -> NtcError(true,1), NtsClosed(true,1), NteClosed(true,1)
+  //                  Create -> Connect    -> NtcError(true,1)
   // STATE          : null      CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :                         0
