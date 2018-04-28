@@ -212,6 +212,8 @@ class ConnectManager(handler: ConnectHandler? = null) {
         if (waitRetry) {
           waitRetry = false
           state = ConnectState.disconnectComplete(isSuccess = true)
+        } else {
+          waitDisconnect = true
         }
       }
     }
