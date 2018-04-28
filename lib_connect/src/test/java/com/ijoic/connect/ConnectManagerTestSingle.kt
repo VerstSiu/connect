@@ -40,6 +40,11 @@ open class ConnectManagerTestSingle {
   // RfConnectFF -> RefreshConnect(forceConnect = false)
   // RfConnectFT -> RefreshConnect(forceConnect = true)
   // (Boolean, Int) -> (isConnectRequired, maxRetryCount)
+  // T{:Int} -> (true, Int)
+  // F{:Int} -> (false, Int)
+  // TN -> (true, negative)
+  // FN -> (false, negative)
+  // Retry -> (true,1) or replaced
 
   // Tool methods
 

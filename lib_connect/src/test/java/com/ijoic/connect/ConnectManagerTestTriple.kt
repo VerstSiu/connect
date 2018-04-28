@@ -821,9 +821,9 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectNtcErrorRetryRtConnect(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectNtcErrorRetryRtConnect(pair: Pair<ConnectManager, MockHandler>, s1: ((MockHandler) -> Unit)? = null) {
     val manager = pair.first
-    testCoupleConnectNtcErrorRetry(pair)
+    testCoupleConnectNtcErrorRetry(pair, s1)
 
     manager.retryConnect()
     val currentState = manager.state
