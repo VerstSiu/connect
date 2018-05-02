@@ -47,20 +47,24 @@ class ConnectManager(handler: ConnectHandler? = null) {
      *
      * <p>Do invoke notifyConnectSuccess or notifyConnectError when disconnect complete.</p>
      *
+     * @param manager connect manager.
+     *
      * @see notifyConnectSuccess
      * @see notifyConnectError
      */
-    fun onConnect()
+    fun onConnect(manager: ConnectManager)
 
     /**
      * Disconnect.
      *
      * <p>Do invoke notifyDisconnectSuccess or notifyDisconnectError when disconnect complete.</p>
      *
+     * @param manager connect manager.
+     *
      * @see notifyDisconnectSuccess
      * @see notifyDisconnectError
      */
-    fun onDisconnect()
+    fun onDisconnect(manager: ConnectManager)
 
     /**
      * Retry connect.
@@ -457,14 +461,14 @@ class ConnectManager(handler: ConnectHandler? = null) {
    * Execute connect.
    */
   private fun executeConnect() {
-    refHandler.get()?.onConnect()
+    refHandler.get()?.onConnect(this)
   }
 
   /**
    * Execute disconnect.
    */
   private fun executeDisconnect() {
-    refHandler.get()?.onDisconnect()
+    refHandler.get()?.onDisconnect(this)
   }
 
   /**
