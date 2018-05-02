@@ -143,6 +143,21 @@ class ConnectManager(handler: ConnectHandler? = null) {
       private set
 
   /**
+   * Connect ready status(connect complete success).
+   */
+  val isConnectReady: Boolean
+      get() {
+        val currentState = state ?: return false
+        return when(currentState.stateValue) {
+          ConnectState.STATE_CONNECT_COMPLETE,
+          ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
+            currentState.isSuccess
+          }
+          else -> false
+        }
+      }
+
+  /**
    * Returns last connect state.
    */
   private fun getLastState(): ConnectState? {
