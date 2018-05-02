@@ -35,24 +35,44 @@ class ConnectManager(handler: ConnectHandler? = null) {
 
   /**
    * Connect handler.
+   *
+   * <p>Do invoke notifyServerClosed or notifyErrorClosed when needed.</p>
+   *
+   * @see notifyServerClosed
+   * @see notifyErrorClosed
    */
   interface ConnectHandler {
     /**
      * Connect.
+     *
+     * <p>Do invoke notifyConnectSuccess or notifyConnectError when disconnect complete.</p>
+     *
+     * @see notifyConnectSuccess
+     * @see notifyConnectError
      */
     fun onConnect()
 
     /**
      * Disconnect.
+     *
+     * <p>Do invoke notifyDisconnectSuccess or notifyDisconnectError when disconnect complete.</p>
+     *
+     * @see notifyDisconnectSuccess
+     * @see notifyDisconnectError
      */
     fun onDisconnect()
 
     /**
      * Retry connect.
      *
+     * <p>Call manager.retryConnect directly or post with specific delay milliseconds according to retry count.</p>
+     *
+     * @param manager connect manager.
      * @param retryCount retry count.
+     *
+     * @see retryConnect
      */
-    fun onRetryConnect(retryCount: Int)
+    fun onRetryConnect(manager: ConnectManager, retryCount: Int)
 
     /**
      * Returns connect required status.
@@ -453,7 +473,7 @@ class ConnectManager(handler: ConnectHandler? = null) {
    * @param retryCount retry count.
    */
   private fun executeRetryConnect(retryCount: Int) {
-    refHandler.get()?.onRetryConnect(retryCount)
+    refHandler.get()?.onRetryConnect(this, retryCount)
   }
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> notify methods :start <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
