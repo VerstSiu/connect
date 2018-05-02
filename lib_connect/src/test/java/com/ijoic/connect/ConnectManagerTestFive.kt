@@ -821,7 +821,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     manager.notifyErrorClosed()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    assert(currentState?.isSuccess == true)
+    assert(currentState?.isSuccess == false)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
@@ -980,7 +980,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                                                                 FALSE                     TRUE
   // RETRY_COUNT    :                         0                   0
-  // WAIT_CONNECT   :
+  // WAIT_CONNECT   :                                                                                           TRUE
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :                         TRUE
   // ENABLED        :           TRUE          TRUE                TRUE                TRUE                      TRUE
@@ -1179,7 +1179,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
     assert(currentState?.isSuccess == true)
-    assert(!manager.waitConnect)
+    assert(manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
@@ -1558,7 +1558,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // SUCCESS        :
   // RETRY_COUNT    :                         0                   0                   0                   0
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:
+  // WAIT_DISCONNECT:                                                                                     TRUE
   // WAIT_RETRY     :                         TRUE
   // ENABLED        :           TRUE          TRUE                TRUE                TRUE
   // PAUSED         :                                                                 TRUE                TRUE
@@ -1667,8 +1667,8 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
     assert(currentState?.retryCount == 0)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(manager.connectPaused)

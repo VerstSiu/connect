@@ -144,6 +144,12 @@ class ConnectManager(handler: ConnectHandler? = null) {
             state = ConnectState.connecting
           }
         }
+        ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
+          if (!currentState.isSuccess) {
+            state = ConnectState.connecting
+            executeConnect()
+          }
+        }
       }
     } else {
       if (currentState == null) {
@@ -151,11 +157,17 @@ class ConnectManager(handler: ConnectHandler? = null) {
         return
       }
       when(currentState.stateValue) {
+        ConnectState.STATE_DISCONNECTING -> {
+          waitConnect = true
+        }
         ConnectState.STATE_DISCONNECT_COMPLETE -> {
           if (currentState.isSuccess) {
             waitRetry = false
           }
           waitConnect = true
+        }
+        ConnectState.STATE_RETRY_CONNECTING -> {
+          state = ConnectState.connecting
         }
       }
     }
@@ -190,6 +202,14 @@ class ConnectManager(handler: ConnectHandler? = null) {
             waitDisconnect = true
           }
         }
+        ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
+          if (currentState.isSuccess) {
+            state = ConnectState.disconnecting
+            executeDisconnect()
+          } else {
+            state = ConnectState.disconnectComplete(isSuccess = true)
+          }
+        }
       }
     } else {
       when(currentState.stateValue) {
@@ -200,6 +220,9 @@ class ConnectManager(handler: ConnectHandler? = null) {
           if (currentState.isSuccess && waitRetry) {
             waitRetry = false
           }
+        }
+        ConnectState.STATE_RETRY_CONNECTING -> {
+          waitDisconnect = true
         }
       }
     }
@@ -227,6 +250,12 @@ class ConnectManager(handler: ConnectHandler? = null) {
           ConnectState.STATE_RETRY_CONNECTING -> {
             if (waitRetry) {
               waitRetry = false
+              executeConnect()
+            }
+          }
+          ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
+            if (!currentState.isSuccess) {
+              state = ConnectState.connecting
               executeConnect()
             }
           }
@@ -271,6 +300,16 @@ class ConnectManager(handler: ConnectHandler? = null) {
         ConnectState.STATE_RETRY_CONNECTING -> {
           if (waitRetry) {
             state = ConnectState.disconnectComplete(isSuccess = true, retryCount = currentState.retryCount)
+          }
+        }
+        ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
+          if (currentState.isSuccess) {
+            waitConnect = true
+            state = ConnectState.disconnecting
+            executeDisconnect()
+          } else {
+            waitConnect = true
+            state = ConnectState.disconnectComplete(isSuccess = true)
           }
         }
       }
@@ -374,6 +413,18 @@ class ConnectManager(handler: ConnectHandler? = null) {
             state = ConnectState.connecting
           }
         }
+        ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
+          if (currentState.isSuccess) {
+            if (forceConnect) {
+              waitConnect = true
+              state = ConnectState.disconnecting
+              executeDisconnect()
+            }
+          } else {
+            state = ConnectState.connecting
+            executeConnect()
+          }
+        }
       }
     }
   }
@@ -422,18 +473,36 @@ class ConnectManager(handler: ConnectHandler? = null) {
           }
         }
       } else {
-        if (currentState.stateValue == ConnectState.STATE_CONNECTING && waitDisconnect) {
-          waitDisconnect = false
-          state = ConnectState.disconnecting
-          executeDisconnect()
+        when(currentState.stateValue) {
+          ConnectState.STATE_CONNECTING -> {
+            if (waitDisconnect) {
+              waitDisconnect = false
+              state = ConnectState.disconnecting
+              executeDisconnect()
+            }
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            if (waitDisconnect) {
+              waitDisconnect = false
+              state = ConnectState.disconnecting
+              executeDisconnect()
+            }
+          }
         }
       }
     } else {
       if (connectEnabled) {
-        if (currentState.stateValue == ConnectState.STATE_CONNECTING) {
-          waitConnect = true
-          state = ConnectState.disconnecting
-          executeDisconnect()
+        when(currentState.stateValue) {
+          ConnectState.STATE_CONNECTING -> {
+            waitConnect = true
+            state = ConnectState.disconnecting
+            executeDisconnect()
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            waitConnect = true
+            state = ConnectState.disconnecting
+            executeDisconnect()
+          }
         }
       } else {
         if (currentState.stateValue == ConnectState.STATE_CONNECTING && waitDisconnect) {
@@ -470,16 +539,34 @@ class ConnectManager(handler: ConnectHandler? = null) {
           }
         }
       } else {
-        if (currentState.stateValue == ConnectState.STATE_CONNECTING && waitDisconnect) {
-          waitDisconnect = false
-          state = ConnectState.disconnectComplete(isSuccess = true)
+        when(currentState.stateValue) {
+          ConnectState.STATE_CONNECTING -> {
+            if (waitDisconnect) {
+              waitDisconnect = false
+              state = ConnectState.disconnectComplete(isSuccess = true)
+            }
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            if (waitDisconnect) {
+              waitDisconnect = false
+              state = ConnectState.disconnecting
+              executeDisconnect()
+            }
+          }
         }
       }
     } else {
       if (connectEnabled) {
-        if (currentState.stateValue == ConnectState.STATE_CONNECTING) {
-          waitConnect = true
-          state = ConnectState.disconnectComplete(isSuccess = true)
+        when(currentState.stateValue) {
+          ConnectState.STATE_CONNECTING -> {
+            waitConnect = true
+            state = ConnectState.disconnectComplete(isSuccess = true)
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            waitConnect = true
+            state = ConnectState.disconnecting
+            executeDisconnect()
+          }
         }
       } else {
         if (currentState.stateValue == ConnectState.STATE_CONNECTING && waitDisconnect) {
@@ -509,8 +596,14 @@ class ConnectManager(handler: ConnectHandler? = null) {
         }
       }
     } else {
-      if (connectEnabled && currentState.stateValue == ConnectState.STATE_DISCONNECTING && waitConnect) {
-        state = ConnectState.disconnectComplete(isSuccess = true)
+      if (connectEnabled) {
+        if (currentState.stateValue == ConnectState.STATE_DISCONNECTING && waitConnect) {
+          state = ConnectState.disconnectComplete(isSuccess = true)
+        }
+      } else {
+        if (currentState.stateValue == ConnectState.STATE_DISCONNECTING) {
+          state = ConnectState.disconnectComplete(isSuccess = true)
+        }
       }
     }
   }
@@ -536,8 +629,14 @@ class ConnectManager(handler: ConnectHandler? = null) {
         }
       }
     } else {
-      if (connectEnabled && currentState.stateValue == ConnectState.STATE_DISCONNECTING && waitConnect) {
-        state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+      if (connectEnabled) {
+        if (currentState.stateValue == ConnectState.STATE_DISCONNECTING && waitConnect) {
+          state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+        }
+      } else {
+        if (currentState.stateValue == ConnectState.STATE_DISCONNECTING) {
+          state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+        }
       }
     }
   }
@@ -579,6 +678,11 @@ class ConnectManager(handler: ConnectHandler? = null) {
               })
             }
           }
+          ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
+            matchRetry(0, {
+              state = ConnectState.disconnectComplete(isSuccess = true)
+            })
+          }
         }
       } else {
         when(currentState.stateValue) {
@@ -590,6 +694,12 @@ class ConnectManager(handler: ConnectHandler? = null) {
           }
           ConnectState.STATE_DISCONNECTING -> {
             state = ConnectState.disconnectComplete(isSuccess = true)
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            if (waitDisconnect) {
+              waitDisconnect = false
+              state = ConnectState.disconnectComplete(isSuccess = true)
+            }
           }
         }
       }
@@ -605,11 +715,22 @@ class ConnectManager(handler: ConnectHandler? = null) {
               state = ConnectState.disconnectComplete(isSuccess = true)
             }
           }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            waitConnect = true
+            state = ConnectState.disconnectComplete(isSuccess = true)
+          }
         }
       } else {
-        if (currentState.stateValue == ConnectState.STATE_CONNECTING && waitDisconnect) {
-          waitDisconnect = false
-          state = ConnectState.disconnectComplete(isSuccess = true)
+        when(currentState.stateValue) {
+          ConnectState.STATE_CONNECTING -> {
+            if (waitDisconnect) {
+              waitDisconnect = false
+              state = ConnectState.disconnectComplete(isSuccess = true)
+            }
+          }
+          ConnectState.STATE_DISCONNECTING -> {
+            state = ConnectState.disconnectComplete(isSuccess = true)
+          }
         }
       }
     }
@@ -654,6 +775,11 @@ class ConnectManager(handler: ConnectHandler? = null) {
               })
             }
           }
+          ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
+            matchRetry(0, {
+              state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+            })
+          }
         }
       } else {
         when(currentState.stateValue) {
@@ -665,6 +791,12 @@ class ConnectManager(handler: ConnectHandler? = null) {
           }
           ConnectState.STATE_DISCONNECTING -> {
             state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            if (waitDisconnect) {
+              waitDisconnect = false
+              state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+            }
           }
         }
       }
@@ -680,11 +812,22 @@ class ConnectManager(handler: ConnectHandler? = null) {
               state = ConnectState.disconnectComplete(isSuccess = false, error = error)
             }
           }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            waitConnect = true
+            state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+          }
         }
       } else {
-        if (currentState.stateValue == ConnectState.STATE_CONNECTING && waitDisconnect) {
-          waitDisconnect = false
-          state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+        when(currentState.stateValue) {
+          ConnectState.STATE_CONNECTING -> {
+            if (waitDisconnect) {
+              waitDisconnect = false
+              state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+            }
+          }
+          ConnectState.STATE_DISCONNECTING -> {
+            state = ConnectState.disconnectComplete(isSuccess = false, error = error)
+          }
         }
       }
     }
