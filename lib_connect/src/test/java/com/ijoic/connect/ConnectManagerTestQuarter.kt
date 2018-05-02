@@ -1446,9 +1446,9 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectNtcErrorT1RtConnectNtcError(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectNtcErrorT1RtConnectNtcError(pair: Pair<ConnectManager, MockHandler>, s1: ((MockHandler) -> Unit)? = null) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = s1 ?: { it.connectRequired = true; it.maxRetry = 1 })
 
     manager.notifyConnectError()
     val currentState = manager.state
