@@ -106,7 +106,7 @@ open class ConnectManagerTestSingle {
   // ENABLED        :          TRUE
   // PAUSED         :
   //
-  //                        -> Connect, NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, RsConnect, RfConnectFF, RfConnectFT
+  //                        -> Connect, NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, RsConnect, RfConnect
   // STATE          : null     null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -137,8 +137,7 @@ open class ConnectManagerTestSingle {
   @Test fun testSingleRtConnect() = testSingleRtConnect(ConnectManager())
   @Test fun testSinglePsConnect() = testSinglePsConnect(ConnectManager())
   @Test fun testSingleRsConnect() = testSingleRsConnect(ConnectManager())
-  @Test fun testSingleRfConnectFF() = testSingleRfConnectFF(ConnectManager())
-  @Test fun testSingleRfConnectFT() = testSingleRfConnectFT(ConnectManager())
+  @Test fun testSingleRfConnect() = testSingleRfConnect(ConnectManager())
 
   protected fun testSingleConnect(manager: ConnectManager) {
     testManagerCreate(manager)
@@ -272,22 +271,10 @@ open class ConnectManagerTestSingle {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testSingleRfConnectFF(manager: ConnectManager) {
+  protected fun testSingleRfConnect(manager: ConnectManager) {
     testManagerCreate(manager)
 
-    manager.refreshConnect(forceConnect = false)
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
-
-  protected fun testSingleRfConnectFT(manager: ConnectManager) {
-    testManagerCreate(manager)
-
-    manager.refreshConnect(forceConnect = true)
+    manager.refreshConnect()
     Assert.assertTrue(manager.state == null)
     Assert.assertTrue(!manager.waitConnect)
     Assert.assertTrue(!manager.waitDisconnect)

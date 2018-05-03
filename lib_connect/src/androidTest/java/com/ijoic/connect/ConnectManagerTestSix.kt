@@ -175,7 +175,7 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
   // ENABLED        :           TRUE          TRUE                TRUE
   // PAUSED         :                                                                                     TRUE                TRUE
   //
-  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> PsConnect        -> RsConnect, RfConnectFF, RfConnectFT
+  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> PsConnect        -> RsConnect, RfConnect
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :                         0                   0                   0                   0                   0
@@ -196,8 +196,7 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
   @Test fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRtConnect() = testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRtConnect(createManagerPair())
   @Test fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectPsConnect() = testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectPsConnect(createManagerPair())
   @Test fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRsConnect() = testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRsConnect(createManagerPair())
-  @Test fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnectFF() = testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnectFF(createManagerPair())
-  @Test fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnectFT() = testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnectFT(createManagerPair())
+  @Test fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnect() = testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnect(createManagerPair())
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
@@ -363,7 +362,7 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnectFF(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testFiveConnectNtcErrorRetryRtConnectDisconnectPsConnect(pair)
 
@@ -378,18 +377,4 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnectFT(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testFiveConnectNtcErrorRetryRtConnectDisconnectPsConnect(pair)
-
-    manager.refreshConnect(forceConnect = true)
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    assert(currentState?.retryCount == 0)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(!manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
 }

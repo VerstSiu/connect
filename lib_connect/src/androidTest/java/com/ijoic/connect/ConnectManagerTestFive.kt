@@ -147,7 +147,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE
   // PAUSED         :                                                              TRUE             TRUE
   //
-  //                  Create -> Connect    -> NtcSuccess       -> Disconnect    -> PsConnect     -> RsConnect, RfConnectFF, RfConnectFT
+  //                  Create -> Connect    -> NtcSuccess       -> Disconnect    -> PsConnect     -> RsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    DISCONNECTING    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -168,8 +168,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   @Test fun testFiveConnectNtcSuccessDisconnectPsConnectRtConnect() = testFiveConnectNtcSuccessDisconnectPsConnectRtConnect(ConnectManager())
   @Test fun testFiveConnectNtcSuccessDisconnectPsConnectPsConnect() = testFiveConnectNtcSuccessDisconnectPsConnectPsConnect(ConnectManager())
   @Test fun testFiveConnectNtcSuccessDisconnectPsConnectRsConnect() = testFiveConnectNtcSuccessDisconnectPsConnectRsConnect(ConnectManager())
-  @Test fun testFiveConnectNtcSuccessDisconnectPsConnectRfConnectFF() = testFiveConnectNtcSuccessDisconnectPsConnectRfConnectFF(ConnectManager())
-  @Test fun testFiveConnectNtcSuccessDisconnectPsConnectRfConnectFT() = testFiveConnectNtcSuccessDisconnectPsConnectRfConnectFT(ConnectManager())
+  @Test fun testFiveConnectNtcSuccessDisconnectPsConnectRfConnect() = testFiveConnectNtcSuccessDisconnectPsConnectRfConnect(ConnectManager())
 
   protected fun testFiveConnectNtcSuccessDisconnectPsConnectConnect(manager: ConnectManager) {
     testQuarterConnectNtcSuccessDisconnectPsConnect(manager)
@@ -311,22 +310,10 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testFiveConnectNtcSuccessDisconnectPsConnectRfConnectFF(manager: ConnectManager) {
+  protected fun testFiveConnectNtcSuccessDisconnectPsConnectRfConnect(manager: ConnectManager) {
     testQuarterConnectNtcSuccessDisconnectPsConnect(manager)
 
     manager.refreshConnect(forceConnect = false)
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
-
-  protected fun testFiveConnectNtcSuccessDisconnectPsConnectRfConnectFT(manager: ConnectManager) {
-    testQuarterConnectNtcSuccessDisconnectPsConnect(manager)
-
-    manager.refreshConnect(forceConnect = true)
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
     Assert.assertTrue(!manager.waitConnect)
     Assert.assertTrue(!manager.waitDisconnect)
@@ -369,7 +356,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE
   // PAUSED         :                                                                    TRUE                   TRUE
   //
-  //                  Create -> Connect    -> NtcError(*,0)    -> Disconnect          -> PsConnect           -> RsConnect, RfConnectFF, RfConnectFT
+  //                  Create -> Connect    -> NtcError(*,0)    -> Disconnect          -> PsConnect           -> RsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                         FALSE               TRUE                   TRUE                   TRUE
   // RETRY_COUNT    :
@@ -390,8 +377,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   @Test fun testFiveConnectNtcErrorDisconnectPsConnectRtConnect() = testFiveConnectNtcErrorDisconnectPsConnectRtConnect(ConnectManager())
   @Test fun testFiveConnectNtcErrorDisconnectPsConnectPsConnect() = testFiveConnectNtcErrorDisconnectPsConnectPsConnect(ConnectManager())
   @Test fun testFiveConnectNtcErrorDisconnectPsConnectRsConnect() = testFiveConnectNtcErrorDisconnectPsConnectRsConnect(ConnectManager())
-  @Test fun testFiveConnectNtcErrorDisconnectPsConnectRfConnectFF() = testFiveConnectNtcErrorDisconnectPsConnectRfConnectFF(ConnectManager())
-  @Test fun testFiveConnectNtcErrorDisconnectPsConnectRfConnectFT() = testFiveConnectNtcErrorDisconnectPsConnectRfConnectFT(ConnectManager())
+  @Test fun testFiveConnectNtcErrorDisconnectPsConnectRfConnect() = testFiveConnectNtcErrorDisconnectPsConnectRfConnect(ConnectManager())
 
   protected fun testFiveConnectNtcErrorDisconnectPsConnectConnect(manager: ConnectManager) {
     testQuarterConnectNtcErrorDisconnectPsConnect(manager)
@@ -547,24 +533,10 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testFiveConnectNtcErrorDisconnectPsConnectRfConnectFF(manager: ConnectManager) {
+  protected fun testFiveConnectNtcErrorDisconnectPsConnectRfConnect(manager: ConnectManager) {
     testQuarterConnectNtcErrorDisconnectPsConnect(manager)
 
     manager.refreshConnect(forceConnect = false)
-    val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == true)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
-
-  protected fun testFiveConnectNtcErrorDisconnectPsConnectRfConnectFT(manager: ConnectManager) {
-    testQuarterConnectNtcErrorDisconnectPsConnect(manager)
-
-    manager.refreshConnect(forceConnect = true)
     val currentState = manager.state
     Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
     Assert.assertTrue(currentState?.isSuccess == true)
@@ -917,7 +889,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> NtcError               -> Connect, RtConnect, RfConnectFF, RfConnectFT
+  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> NtcError               -> Connect, RtConnect, RfConnect
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECT_COMPLETE    CONNECTING
   // SUCCESS        :                                                                 FALSE
   // RETRY_COUNT    :                         0                   0
@@ -1000,8 +972,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   @Test fun testFiveConnectNtcErrorRetryRtConnectNtcErrorRtConnect() = testFiveConnectNtcErrorRetryRtConnectNtcErrorRtConnect(createManagerPair())
   @Test fun testFiveConnectNtcErrorRetryRtConnectNtcErrorPsConnect() = testFiveConnectNtcErrorRetryRtConnectNtcErrorPsConnect(createManagerPair())
   @Test fun testFiveConnectNtcErrorRetryRtConnectNtcErrorRsConnect() = testFiveConnectNtcErrorRetryRtConnectNtcErrorRsConnect(createManagerPair())
-  @Test fun testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnectFF() = testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnectFF(createManagerPair())
-  @Test fun testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnectFT() = testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnectFT(createManagerPair())
+  @Test fun testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnect() = testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnect(createManagerPair())
 
   protected fun testFiveConnectNtcErrorRetryRtConnectNtcErrorConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
@@ -1202,25 +1173,11 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnectFF(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testQuarterConnectNtcErrorT1RtConnectNtcError(pair)
 
     manager.refreshConnect(forceConnect = false)
-    val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
-
-  protected fun testFiveConnectNtcErrorRetryRtConnectNtcErrorRfConnectFT(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testQuarterConnectNtcErrorT1RtConnectNtcError(pair)
-
-    manager.refreshConnect(forceConnect = true)
     val currentState = manager.state
     Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     Assert.assertTrue(!manager.waitConnect)
@@ -1264,7 +1221,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE                TRUE
   // PAUSED         :
   //
-  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> Disconnect, NtdSuccess, NtdError, RtConnect, RsConnect, RfConnectFF, RfConnectFT
+  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> Disconnect, NtdSuccess, NtdError, RtConnect, RsConnect, RfConnect
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :                         0                   0                   0                   0
@@ -1315,8 +1272,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   @Test fun testFiveConnectNtcErrorRetryRtConnectDisconnectRtConnect() = testFiveConnectNtcErrorRetryRtConnectDisconnectRtConnect(createManagerPair())
   @Test fun testFiveConnectNtcErrorRetryRtConnectDisconnectPsConnect() = testFiveConnectNtcErrorRetryRtConnectDisconnectPsConnect(createManagerPair())
   @Test fun testFiveConnectNtcErrorRetryRtConnectDisconnectRsConnect() = testFiveConnectNtcErrorRetryRtConnectDisconnectRsConnect(createManagerPair())
-  @Test fun testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnectFF() = testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnectFF(createManagerPair())
-  @Test fun testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnectFT() = testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnectFT(createManagerPair())
+  @Test fun testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnect() = testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnect(createManagerPair())
 
   protected fun testFiveConnectNtcErrorRetryRtConnectDisconnectConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
@@ -1481,26 +1437,11 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnectFF(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testQuarterConnectNtcErrorRetryRtConnectDisconnect(pair)
 
     manager.refreshConnect(forceConnect = false)
-    val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
-
-  protected fun testFiveConnectNtcErrorRetryRtConnectDisconnectRfConnectFT(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testQuarterConnectNtcErrorRetryRtConnectDisconnect(pair)
-
-    manager.refreshConnect(forceConnect = true)
     val currentState = manager.state
     Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
     Assert.assertTrue(currentState?.retryCount == 0)
@@ -1595,7 +1536,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE                TRUE                TRUE                TRUE
   // PAUSED         :                                                                 TRUE
   //
-  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> PsConnect        -> RfConnectFF, RfConnectFT
+  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> PsConnect        -> RfConnect
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :                         0                   0                   0                   [0]
@@ -1616,8 +1557,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   @Test fun testFiveConnectNtcErrorRetryRtConnectPsConnectRtConnect() = testFiveConnectNtcErrorRetryRtConnectPsConnectRtConnect(createManagerPair())
   @Test fun testFiveConnectNtcErrorRetryRtConnectPsConnectPsConnect() = testFiveConnectNtcErrorRetryRtConnectPsConnectPsConnect(createManagerPair())
   @Test fun testFiveConnectNtcErrorRetryRtConnectPsConnectRsConnect() = testFiveConnectNtcErrorRetryRtConnectPsConnectRsConnect(createManagerPair())
-  @Test fun testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnectFF() = testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnectFF(createManagerPair())
-  @Test fun testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnectFT() = testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnectFT(createManagerPair())
+  @Test fun testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnect() = testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnect(createManagerPair())
 
   protected fun testFiveConnectNtcErrorRetryRtConnectPsConnectConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
@@ -1782,26 +1722,11 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnectFF(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testQuarterConnectNtcErrorRetryRtConnectPsConnect(pair)
 
     manager.refreshConnect(forceConnect = false)
-    val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
-
-  protected fun testFiveConnectNtcErrorRetryRtConnectPsConnectRfConnectFT(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testQuarterConnectNtcErrorRetryRtConnectPsConnect(pair)
-
-    manager.refreshConnect(forceConnect = true)
     val currentState = manager.state
     Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
     Assert.assertTrue(currentState?.retryCount == 0)
@@ -1846,7 +1771,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE
   // PAUSED         :                                                                 TRUE                   TRUE
   //
-  //                  Create -> Connect    -> Disconnect    -> NteClosed           -> PsConnect           -> RsConnect, RfConnectFF, RfConnectFT
+  //                  Create -> Connect    -> Disconnect    -> NteClosed           -> PsConnect           -> RsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECTING       DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                                          FALSE                  FALSE                  FALSE
   // RETRY_COUNT    :
@@ -1867,8 +1792,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   @Test fun testFiveConnectDisconnectNteClosedPsConnectRtConnect() = testFiveConnectDisconnectNteClosedPsConnectRtConnect(ConnectManager())
   @Test fun testFiveConnectDisconnectNteClosedPsConnectPsConnect() = testFiveConnectDisconnectNteClosedPsConnectPsConnect(ConnectManager())
   @Test fun testFiveConnectDisconnectNteClosedPsConnectRsConnect() = testFiveConnectDisconnectNteClosedPsConnectRsConnect(ConnectManager())
-  @Test fun testFiveConnectDisconnectNteClosedPsConnectRfConnectFF() = testFiveConnectDisconnectNteClosedPsConnectRfConnectFF(ConnectManager())
-  @Test fun testFiveConnectDisconnectNteClosedPsConnectRfConnectFT() = testFiveConnectDisconnectNteClosedPsConnectRfConnectFT(ConnectManager())
+  @Test fun testFiveConnectDisconnectNteClosedPsConnectRfConnect() = testFiveConnectDisconnectNteClosedPsConnectRfConnect(ConnectManager())
 
   protected fun testFiveConnectDisconnectNteClosedPsConnectConnect(manager: ConnectManager) {
     testQuarterConnectDisconnectNteClosedPsConnect(manager)
@@ -2024,24 +1948,10 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testFiveConnectDisconnectNteClosedPsConnectRfConnectFF(manager: ConnectManager) {
+  protected fun testFiveConnectDisconnectNteClosedPsConnectRfConnect(manager: ConnectManager) {
     testQuarterConnectDisconnectNteClosedPsConnect(manager)
 
     manager.refreshConnect(forceConnect = false)
-    val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == false)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
-
-  protected fun testFiveConnectDisconnectNteClosedPsConnectRfConnectFT(manager: ConnectManager) {
-    testQuarterConnectDisconnectNteClosedPsConnect(manager)
-
-    manager.refreshConnect(forceConnect = true)
     val currentState = manager.state
     Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
     Assert.assertTrue(currentState?.isSuccess == false)

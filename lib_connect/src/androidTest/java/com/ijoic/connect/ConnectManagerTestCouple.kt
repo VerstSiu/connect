@@ -53,7 +53,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> Connect, NtdSuccess, NtdError, RtConnect, RsConnect, RfConnectFF, RfConnectFT
+  //                  Create -> Connect    -> Connect, NtdSuccess, NtdError, RtConnect, RsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -147,8 +147,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   @Test fun testCoupleConnectRtConnect() = testCoupleConnectRtConnect(ConnectManager())
   @Test fun testCoupleConnectPsConnect() = testCoupleConnectPsConnect(ConnectManager())
   @Test fun testCoupleConnectRsConnect() = testCoupleConnectRsConnect(ConnectManager())
-  @Test fun testCoupleConnectRfConnectFF() = testCoupleConnectRfConnectFF(ConnectManager())
-  @Test fun testCoupleConnectRfConnectFT() = testCoupleConnectRfConnectFT(ConnectManager())
+  @Test fun testCoupleConnectRfConnectFF() = testCoupleConnectRfConnect(ConnectManager())
 
   protected fun testCoupleConnectConnect(manager: ConnectManager) {
     testSingleConnect(manager)
@@ -351,22 +350,10 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testCoupleConnectRfConnectFF(manager: ConnectManager) {
+  protected fun testCoupleConnectRfConnect(manager: ConnectManager) {
     testSingleConnect(manager)
 
-    manager.refreshConnect(forceConnect = false)
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
-
-  protected fun testCoupleConnectRfConnectFT(manager: ConnectManager) {
-    testSingleConnect(manager)
-
-    manager.refreshConnect(forceConnect = true)
+    manager.refreshConnect()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
     Assert.assertTrue(!manager.waitConnect)
     Assert.assertTrue(!manager.waitDisconnect)
@@ -409,7 +396,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // ENABLED        :
   // PAUSED         :           TRUE         TRUE
   //
-  //                  Create -> PsConnect -> RsConnect, RfConnectFF, RfConnectFT
+  //                  Create -> PsConnect -> RsConnect, RfConnect
   // STATE          : null      null         null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -430,8 +417,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   @Test fun testCouplePsConnectRtConnect() = testCouplePsConnectRtConnect(ConnectManager())
   @Test fun testCouplePsConnectPsConnect() = testCouplePsConnectPsConnect(ConnectManager())
   @Test fun testCouplePsConnectRsConnect() = testCouplePsConnectRsConnect(ConnectManager())
-  @Test fun testCouplePsConnectRfConnectFF() = testCouplePsConnectRfConnectFF(ConnectManager())
-  @Test fun testCouplePsConnectRfConnectFT() = testCouplePsConnectRfConnectFT(ConnectManager())
+  @Test fun testCouplePsConnectRfConnect() = testCouplePsConnectRfConnect(ConnectManager())
 
   protected fun testCouplePsConnectConnect(manager: ConnectManager) {
     testSinglePsConnect(manager)
@@ -565,10 +551,10 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testCouplePsConnectRfConnectFF(manager: ConnectManager) {
+  protected fun testCouplePsConnectRfConnect(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
-    manager.refreshConnect(forceConnect = false)
+    manager.refreshConnect()
     Assert.assertTrue(manager.state == null)
     Assert.assertTrue(!manager.waitConnect)
     Assert.assertTrue(!manager.waitDisconnect)
@@ -577,15 +563,4 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     Assert.assertTrue(!manager.connectPaused)
   }
 
-  protected fun testCouplePsConnectRfConnectFT(manager: ConnectManager) {
-    testSinglePsConnect(manager)
-
-    manager.refreshConnect(forceConnect = true)
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
-  }
 }
