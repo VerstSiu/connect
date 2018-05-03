@@ -38,14 +38,14 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
   // ENABLED        :         TRUE
   // PAUSED         :         TRUE    TRUE
   //
-  // STATE          : CONNECTING  CONNECTING  CONNECTING  CONNECTING
+  // STATE          : CONNECTING  CONNECTING  CONNECTING  CONNECTING  CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT: TRUE        TRUE
+  // WAIT_DISCONNECT: TRUE        TRUE        TRUE
   // WAIT_RETRY     :
-  // ENABLED        :                         TRUE        TRUE
-  // PAUSED         :             TRUE                    TRUE
+  // ENABLED        :             TRUE                    TRUE        TRUE
+  // PAUSED         :                         TRUE                    TRUE
   //
   // STATE          : CONNECT_COMPLETE  CONNECT_COMPLETE
   // SUCCESS        : TRUE              FALSE
