@@ -17,7 +17,6 @@
  */
 package com.ijoic.connect
 
-import junit.framework.Assert
 import org.junit.Test
 
 /**
@@ -117,9 +116,9 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
   // Test Cases:
   //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> PsConnect        -> Connect
-  // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    CONNECTING
+  // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
-  // RETRY_COUNT    :                         0                   0                   0                   0
+  // RETRY_COUNT    :                         0                   0                   0                   0                   [0]
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:                                                                 TRUE                TRUE
   // WAIT_RETRY     :                         TRUE
@@ -206,12 +205,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.connect()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectNtcSuccess(pair: Pair<ConnectManager, MockHandler>) {
@@ -220,12 +220,12 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.notifyConnectSuccess()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectNtcError(pair: Pair<ConnectManager, MockHandler>) {
@@ -234,13 +234,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.notifyConnectError()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == true)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectDisconnect(pair: Pair<ConnectManager, MockHandler>) {
@@ -249,13 +249,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.disconnect()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectNtdSuccess(pair: Pair<ConnectManager, MockHandler>) {
@@ -264,13 +264,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.notifyDisconnectSuccess()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectNtdError(pair: Pair<ConnectManager, MockHandler>) {
@@ -279,13 +279,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.notifyDisconnectError()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectNtsClosed(pair: Pair<ConnectManager, MockHandler>) {
@@ -294,13 +294,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.notifyServerClosed()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == true)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectNteClosed(pair: Pair<ConnectManager, MockHandler>) {
@@ -309,13 +309,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.notifyErrorClosed()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == false)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRtConnect(pair: Pair<ConnectManager, MockHandler>) {
@@ -324,13 +324,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.retryConnect()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectPsConnect(pair: Pair<ConnectManager, MockHandler>) {
@@ -339,13 +339,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.pauseConnect()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRsConnect(pair: Pair<ConnectManager, MockHandler>) {
@@ -354,13 +354,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.resumeConnect()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnectFF(pair: Pair<ConnectManager, MockHandler>) {
@@ -369,13 +369,13 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.refreshConnect(forceConnect = false)
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testSixConnectNtcErrorRetryRtConnectDisconnectPsConnectRfConnectFT(pair: Pair<ConnectManager, MockHandler>) {
@@ -384,12 +384,12 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
 
     manager.refreshConnect(forceConnect = true)
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 }

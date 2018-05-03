@@ -208,10 +208,15 @@ class ConnectManager(handler: ConnectHandler? = null) {
         ConnectState.STATE_RETRY_CONNECTING -> {
           if (waitRetry) {
             waitRetry = false
-            setLastState(ConnectState.connecting)
+
+            if (currentState.retryCount != 0) {
+              setLastState(ConnectState.connectingRetry(0))
+            }
             executeConnect()
           } else {
-            setLastState(ConnectState.connecting)
+            if (currentState.retryCount != 0) {
+              setLastState(ConnectState.connectingRetry(0))
+            }
           }
         }
       }
@@ -231,7 +236,9 @@ class ConnectManager(handler: ConnectHandler? = null) {
           waitConnect = true
         }
         ConnectState.STATE_RETRY_CONNECTING -> {
-          setLastState(ConnectState.connecting)
+          if (currentState.retryCount != 0) {
+            setLastState(ConnectState.connectingRetry(0))
+          }
         }
       }
     }
@@ -463,10 +470,15 @@ class ConnectManager(handler: ConnectHandler? = null) {
       ConnectState.STATE_RETRY_CONNECTING -> {
         if (waitRetry) {
           waitRetry = false
-          setLastState(ConnectState.connecting)
+
+          if (currentState.retryCount != 0) {
+            setLastState(ConnectState.connectingRetry(0))
+          }
           executeConnect()
         } else {
-          setLastState(ConnectState.connecting)
+          if (currentState.retryCount != 0) {
+            setLastState(ConnectState.connectingRetry(0))
+          }
         }
       }
     }
