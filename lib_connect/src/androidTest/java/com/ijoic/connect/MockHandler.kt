@@ -35,13 +35,13 @@ class MockHandler: ConnectManager.ConnectHandler {
    */
   var maxRetry = 0
 
-  override fun onConnect() {
+  override fun onConnect(manager: ConnectManager) {
   }
 
-  override fun onDisconnect() {
+  override fun onDisconnect(manager: ConnectManager) {
   }
 
-  override fun onRetryConnect(retryCount: Int) {
+  override fun onRetryConnect(manager: ConnectManager, retryCount: Int) {
   }
 
   override fun isConnectRequired() = connectRequired
