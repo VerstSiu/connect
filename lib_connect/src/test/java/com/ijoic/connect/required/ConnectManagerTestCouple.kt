@@ -144,7 +144,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
 
   @Test fun testCoupleConnectTAConnectTA() = testCoupleConnectTAConnectTA(ConnectManager())
   @Test fun testCoupleConnectTAConnectFA() = testCoupleConnectTAConnectFA(createManagerPair())
-  @Test fun testCoupleConnectTANtcSuccess() = testCoupleConnectTANtcSuccess(createManagerPair())
+  @Test fun testCoupleConnectTANtcSuccess() = testCoupleConnectTANtcSuccess(ConnectManager())
   @Test fun testCoupleConnectTANtcErrorT0() = testCoupleConnectTANtcErrorT0(createManagerPair())
   @Test fun testCoupleConnectTANtcErrorT1() = testCoupleConnectTANtcErrorT1(createManagerPair())
   @Test fun testCoupleConnectTANtcErrorFA() = testCoupleConnectTANtcErrorFA(createManagerPair())
@@ -192,12 +192,8 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testCoupleConnectTANtcSuccess(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
+  protected fun testCoupleConnectTANtcSuccess(manager: ConnectManager) {
     testSingleConnectTA(manager)
-
-    handler.connectRequired = false
 
     manager.notifyConnectSuccess()
     val currentState = manager.state
