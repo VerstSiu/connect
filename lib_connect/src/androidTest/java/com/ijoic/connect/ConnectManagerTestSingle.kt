@@ -57,12 +57,6 @@ open class ConnectManagerTestSingle {
   // Resume connect: connect if required, cancel connect if not required [when resume from pause]
   // Refresh connect: connect, reset retry status if required, disconnect if not required [resume anytime]
 
-  // State map:
-  // idle -> connect -> connect success -> disconnect -> disconnect success
-  //                    connect error                    disconnect error
-  //                    server closed                    server closed
-  //                    error closed                     error closed
-
   // Tool methods
 
   /**

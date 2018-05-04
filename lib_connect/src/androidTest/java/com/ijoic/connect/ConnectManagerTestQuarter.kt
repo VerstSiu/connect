@@ -33,11 +33,11 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // STATE          : null    null    null
   // SUCCESS        :
   // RETRY_COUNT    :
-  // WAIT_CONNECT   : TRUE
+  // WAIT_CONNECT   :         TRUE
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        : TRUE
-  // PAUSED         : TRUE            TRUE
+  // ENABLED        :         TRUE
+  // PAUSED         :         TRUE    TRUE
   //
   // STATE          : CONNECTING  CONNECTING  CONNECTING  CONNECTING
   // SUCCESS        :
@@ -535,22 +535,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   // Current:
-  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFA
-  // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING
-  // SUCCESS        :                         TRUE
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :           TRUE          TRUE                TRUE
-  // PAUSED         :
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
-
-  // Current:
-  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFTTA
+  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFT
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -563,7 +548,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFTTA   -> Connect, NtcSuccess, NtcError, RtConnect, RsConnect, RfConnect
+  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFT   -> Connect, NtcSuccess, NtcError, RtConnect, RsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -573,7 +558,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE          TRUE                TRUE             TRUE
   // PAUSED         :
   //
-  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFTTA   -> Disconnect
+  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFT   -> Disconnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -583,7 +568,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE          TRUE                TRUE
   // PAUSED         :
   //
-  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFTTA   -> NtdSuccess, NtdError, NtsClosed, NteClosed
+  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFT   -> NtdSuccess, NtdError, NtsClosed, NteClosed
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    CONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -593,7 +578,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE          TRUE                TRUE             TRUE
   // PAUSED         :
   //
-  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFTTA   -> PsConnect
+  //                  Create -> Connect    -> NtcSuccess       -> RfConnectFT   -> PsConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -617,7 +602,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   @Test fun testQuarterConnectNtcSuccessRfConnectFTRfConnect() = testQuarterConnectNtcSuccessRfConnectFTRfConnect(ConnectManager())
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTConnect(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.connect()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
@@ -629,7 +614,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTNtcSuccess(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.notifyConnectSuccess()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
@@ -641,7 +626,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTNtcError(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.notifyConnectError()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
@@ -653,7 +638,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTDisconnect(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.disconnect()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
@@ -665,7 +650,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTNtdSuccess(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.notifyDisconnectSuccess()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
@@ -677,7 +662,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTNtdError(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.notifyDisconnectError()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
@@ -689,7 +674,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTNtsClosed(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.notifyServerClosed()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
@@ -701,7 +686,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTNteClosed(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.notifyErrorClosed()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
@@ -713,7 +698,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTRtConnect(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.retryConnect()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
@@ -725,7 +710,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTPsConnect(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.pauseConnect()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
@@ -737,7 +722,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTRsConnect(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.resumeConnect()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
@@ -749,7 +734,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   }
 
   protected fun testQuarterConnectNtcSuccessRfConnectFTRfConnect(manager: ConnectManager) {
-    testTripleConnectNtcSuccessRfConnectFTTA(manager)
+    testTripleConnectNtcSuccessRfConnectFT(manager)
 
     manager.refreshConnect(forceConnect = false)
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
@@ -1347,7 +1332,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair)
+    testTripleConnectNtcErrorRetryRtConnect(pair)
 
     manager.connect()
     val currentState = manager.state
@@ -1362,7 +1347,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectNtcSuccess(pair: Pair<ConnectManager, MockHandler>, s1: ((MockHandler) -> Unit)? = null) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1)
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1)
 
     manager.notifyConnectSuccess()
     val currentState = manager.state
@@ -1377,7 +1362,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorT1RtConnectNtcError(pair: Pair<ConnectManager, MockHandler>, s1: ((MockHandler) -> Unit)? = null) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = s1 ?: { it.connectRequired = true; it.maxRetry = 1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = s1 ?: { it.connectRequired = true; it.maxRetry = 1 })
 
     manager.notifyConnectError()
     val currentState = manager.state
@@ -1392,7 +1377,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorTNRtConnectNtcErrorTN(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
 
     manager.notifyConnectError()
     val currentState = manager.state
@@ -1408,7 +1393,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   protected fun testQuarterConnectNtcErrorTNRtConnectNtcErrorFN(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
 
     handler.connectRequired = false
 
@@ -1425,7 +1410,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorT2RtConnectNtcErrorT2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
 
     manager.notifyConnectError()
     val currentState = manager.state
@@ -1441,7 +1426,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   protected fun testQuarterConnectNtcErrorT2RtConnectNtcErrorF2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
 
     handler.connectRequired = false
 
@@ -1458,7 +1443,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectDisconnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair)
+    testTripleConnectNtcErrorRetryRtConnect(pair)
 
     manager.disconnect()
     val currentState = manager.state
@@ -1473,7 +1458,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectNtdSuccess(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair)
+    testTripleConnectNtcErrorRetryRtConnect(pair)
 
     manager.notifyDisconnectSuccess()
     val currentState = manager.state
@@ -1488,7 +1473,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectNtdError(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair)
+    testTripleConnectNtcErrorRetryRtConnect(pair)
 
     manager.notifyDisconnectError()
     val currentState = manager.state
@@ -1503,7 +1488,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorT1RtConnectNtsClosed(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = 1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 1 })
 
     manager.notifyServerClosed()
     val currentState = manager.state
@@ -1518,7 +1503,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorTNRtConnectNtsClosedTN(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
 
     manager.notifyServerClosed()
     val currentState = manager.state
@@ -1534,7 +1519,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   protected fun testQuarterConnectNtcErrorTNRtConnectNtsClosedFN(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
 
     handler.connectRequired = false
 
@@ -1551,7 +1536,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorT2RtConnectNtsClosedT2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
 
     manager.notifyServerClosed()
     val currentState = manager.state
@@ -1567,7 +1552,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   protected fun testQuarterConnectNtcErrorT2RtConnectNtsClosedF2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
 
     handler.connectRequired = false
 
@@ -1584,7 +1569,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorT1RtConnectNteClosed(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = 1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 1 })
 
     manager.notifyErrorClosed()
     val currentState = manager.state
@@ -1599,7 +1584,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorTNRtConnectNteClosedTN(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
 
     manager.notifyErrorClosed()
     val currentState = manager.state
@@ -1615,7 +1600,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   protected fun testQuarterConnectNtcErrorTNRtConnectNteClosedFN(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = -1 })
 
     handler.connectRequired = false
 
@@ -1632,7 +1617,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorT2RtConnectNteClosedT2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
 
     manager.notifyErrorClosed()
     val currentState = manager.state
@@ -1648,7 +1633,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   protected fun testQuarterConnectNtcErrorT2RtConnectNteClosedF2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testTripleConnectNtcErrorRetryRtConnectTA(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
+    testTripleConnectNtcErrorRetryRtConnect(pair, s1 = { it.connectRequired = true; it.maxRetry = 2 })
 
     handler.connectRequired = false
 
@@ -1665,7 +1650,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectRtConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair)
+    testTripleConnectNtcErrorRetryRtConnect(pair)
 
     manager.retryConnect()
     val currentState = manager.state
@@ -1680,7 +1665,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectPsConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair)
+    testTripleConnectNtcErrorRetryRtConnect(pair)
 
     manager.pauseConnect()
     val currentState = manager.state
@@ -1695,7 +1680,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectRsConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair)
+    testTripleConnectNtcErrorRetryRtConnect(pair)
 
     manager.resumeConnect()
     val currentState = manager.state
@@ -1710,7 +1695,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   protected fun testQuarterConnectNtcErrorRetryRtConnectRfConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    testTripleConnectNtcErrorRetryRtConnectTA(pair)
+    testTripleConnectNtcErrorRetryRtConnect(pair)
 
     manager.refreshConnect(forceConnect = false)
     val currentState = manager.state
@@ -3156,20 +3141,5 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     Assert.assertTrue(manager.connectEnabled)
     Assert.assertTrue(!manager.connectPaused)
   }
-
-  // Current:
-  //                  Create -> PsConnect -> Connect -> RsConnectFA, RfConnectFA
-  // STATE          : null      null         null       null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                        TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                        TRUE       TRUE
-  // PAUSED         :           TRUE         TRUE
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
 
 }
