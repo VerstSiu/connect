@@ -17,8 +17,6 @@
  */
 package com.ijoic.connect
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import java.lang.ref.WeakReference
 
 /**
@@ -27,7 +25,7 @@ import java.lang.ref.WeakReference
  * @author verstsiu on 2018/4/27.
  * @version 1.0
  */
-class ConnectManager(handler: ConnectHandler? = null) {
+open class ConnectManager(handler: ConnectHandler? = null) {
 
   private val refHandler = WeakReference(handler)
 
@@ -102,17 +100,6 @@ class ConnectManager(handler: ConnectHandler? = null) {
       private set
 
   /**
-   * Inner connect state live data.
-   */
-  private var innerStateLive = MutableLiveData<ConnectState>()
-
-  /**
-   * Connect state live data.
-   */
-  val stateLive: LiveData<ConnectState>
-      get() = innerStateLive
-
-  /**
    * Wait connect status.
    */
   internal var waitConnect = false
@@ -169,9 +156,8 @@ class ConnectManager(handler: ConnectHandler? = null) {
    *
    * @param state connect state.
    */
-  private fun setLastState(state: ConnectState) {
+  protected open fun setLastState(state: ConnectState) {
     this.state = state
-    innerStateLive.postValue(state)
   }
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> connect state :end <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
