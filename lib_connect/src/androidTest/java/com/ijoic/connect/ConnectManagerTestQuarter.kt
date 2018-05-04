@@ -30,14 +30,14 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   // Old:
   //
-  // STATE          : null    null    null
+  // STATE          : null    null    null    null
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   : TRUE
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        : TRUE
-  // PAUSED         : TRUE            TRUE
+  // ENABLED        : TRUE    TRUE
+  // PAUSED         : TRUE                    TRUE
   //
   // STATE          : CONNECTING  CONNECTING  CONNECTING  CONNECTING
   // SUCCESS        :
@@ -3156,20 +3156,5 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     Assert.assertTrue(manager.connectEnabled)
     Assert.assertTrue(!manager.connectPaused)
   }
-
-  // Current:
-  //                  Create -> PsConnect -> Connect -> RsConnectFA, RfConnectFA
-  // STATE          : null      null         null       null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                        TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                        TRUE       TRUE
-  // PAUSED         :           TRUE         TRUE
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
 
 }

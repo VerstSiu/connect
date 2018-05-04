@@ -17,7 +17,7 @@
  */
 package com.ijoic.connect
 
-import junit.framework.Assert
+import org.junit.Assert
 import org.junit.Test
 
 /**
@@ -48,14 +48,6 @@ open class ConnectManagerTestSingle {
   // TA -> (true, any)
   // FA -> (false, any)
   // Retry -> (true,1) or replaced
-
-  // State Behaviours:
-  // Connect: connect anyway
-  // Disconnect: disconnect anyway
-  // Retry connect: connect if required, cancel connect if not required
-  // Pause connect: disconnect and mark wait status [when pause from resume]
-  // Resume connect: connect if required, cancel connect if not required [when resume from pause]
-  // Refresh connect: connect, reset retry status if required, disconnect if not required [resume anytime]
 
   // State map:
   // idle -> connect -> connect success -> disconnect -> disconnect success
@@ -112,7 +104,7 @@ open class ConnectManagerTestSingle {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> Connect
+  //                        -> ConnectTA
   // STATE          : null     CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -122,7 +114,17 @@ open class ConnectManagerTestSingle {
   // ENABLED        :          TRUE
   // PAUSED         :
   //
-  //                        -> Connect, NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, RsConnect, RfConnect
+  //                        -> ConnectFA
+  // STATE          : null     null
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE
+  // PAUSED         :
+  //
+  //                        -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, RsConnect, RfConnect
   // STATE          : null     null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -142,7 +144,8 @@ open class ConnectManagerTestSingle {
   // ENABLED        :
   // PAUSED         :          TRUE
 
-  @Test fun testSingleConnect() = testSingleConnect(ConnectManager())
+  @Test fun testSingleConnectTA() = testSingleConnectTA(ConnectManager())
+  @Test fun testSingleConnectFA() = testSingleConnectFA(createManagerPair())
   @Test fun testSingleNtcSuccess() = testSingleNtcSuccess(ConnectManager())
   @Test fun testSingleNtcError() = testSingleNtcError(ConnectManager())
   @Test fun testSingleDisconnect() = testSingleDisconnect(ConnectManager())
@@ -155,11 +158,27 @@ open class ConnectManagerTestSingle {
   @Test fun testSingleRsConnect() = testSingleRsConnect(ConnectManager())
   @Test fun testSingleRfConnect() = testSingleRfConnect(ConnectManager())
 
-  protected fun testSingleConnect(manager: ConnectManager) {
+  protected fun testSingleConnectTA(manager: ConnectManager) {
     testManagerCreate(manager)
 
     manager.connect()
     Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    Assert.assertTrue(!manager.waitConnect)
+    Assert.assertTrue(!manager.waitDisconnect)
+    Assert.assertTrue(!manager.waitRetry)
+    Assert.assertTrue(manager.connectEnabled)
+    Assert.assertTrue(!manager.connectPaused)
+  }
+
+  protected fun testSingleConnectFA(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testManagerCreate(manager)
+
+    handler.connectRequired = false
+
+    manager.connect()
+    Assert.assertTrue(manager.state == null)
     Assert.assertTrue(!manager.waitConnect)
     Assert.assertTrue(!manager.waitDisconnect)
     Assert.assertTrue(!manager.waitRetry)
