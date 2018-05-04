@@ -186,10 +186,8 @@ class ConnectManager(handler: ConnectHandler? = null) {
 
     if (!connectPaused) {
       if (currentState == null) {
-        if (isConnectRequired) {
-          setLastState(ConnectState.connecting)
-          executeConnect()
-        }
+        setLastState(ConnectState.connecting)
+        executeConnect()
         return
       }
       when(currentState.stateValue) {

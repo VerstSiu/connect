@@ -30,14 +30,14 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
 
   // Old:
   //
-  // STATE          : null    null    null
+  // STATE          : null    null
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        : TRUE
-  // PAUSED         :                 TRUE
+  // ENABLED        :
+  // PAUSED         :         TRUE
   //
   // STATE          : CONNECTING
   // SUCCESS        :
