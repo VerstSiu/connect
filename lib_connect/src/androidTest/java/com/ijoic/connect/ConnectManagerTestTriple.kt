@@ -1810,22 +1810,6 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
 
   // Current:
   //
-  //                  Create -> Connect    -> RfConnectFA
-  // STATE          : null      CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                         TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :           TRUE          TRUE
-  // PAUSED         :
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
-
-  // Current:
-  //
   //                  Create -> PsConnect -> Connect
   // STATE          : null      null         null
   // SUCCESS        :

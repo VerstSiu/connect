@@ -45,17 +45,7 @@ open class ConnectManagerTestSingle {
   // F{:Int} -> (false, Int)
   // TN -> (true, negative)
   // FN -> (false, negative)
-  // TA -> (true, any)
-  // FA -> (false, any)
   // Retry -> (true,1) or replaced
-
-  // State Behaviours:
-  // Connect: connect anyway
-  // Disconnect: disconnect anyway
-  // Retry connect: connect if required, cancel connect if not required
-  // Pause connect: disconnect and mark wait status [when pause from resume]
-  // Resume connect: connect if required, cancel connect if not required [when resume from pause]
-  // Refresh connect: connect, reset retry status if required, disconnect if not required [resume anytime]
 
   // Tool methods
 

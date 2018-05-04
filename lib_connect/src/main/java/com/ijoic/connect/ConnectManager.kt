@@ -445,11 +445,6 @@ class ConnectManager(handler: ConnectHandler? = null) {
     }
 
     when(currentState.stateValue) {
-      ConnectState.STATE_CONNECTING -> {
-        if (!isConnectRequired) {
-          waitDisconnect = true
-        }
-      }
       ConnectState.STATE_CONNECT_COMPLETE,
       ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
         if (currentState.isSuccess) {
@@ -879,12 +874,6 @@ class ConnectManager(handler: ConnectHandler? = null) {
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> notify methods :end <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> state methods :start <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
-
-  /**
-   * Connect required status, default as true.
-   */
-  private val isConnectRequired: Boolean
-    get() = refHandler.get()?.isConnectRequired() ?: true
 
   /**
    * Match retry.
