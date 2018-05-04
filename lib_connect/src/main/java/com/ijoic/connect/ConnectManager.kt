@@ -301,7 +301,17 @@ class ConnectManager(handler: ConnectHandler? = null) {
     }
     if (!connectPaused) {
       when (currentState.stateValue) {
-        ConnectState.STATE_CONNECT_COMPLETE,
+        ConnectState.STATE_CONNECTING -> {
+          if (isConnectRequired) {
+            waitDisconnect = false
+          }
+        }
+        ConnectState.STATE_CONNECT_COMPLETE -> {
+          if (!currentState.isSuccess && isConnectRequired) {
+            setLastState(ConnectState.connecting)
+            executeConnect()
+          }
+        }
         ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
           if (!currentState.isSuccess) {
             setLastState(ConnectState.connecting)
@@ -309,13 +319,20 @@ class ConnectManager(handler: ConnectHandler? = null) {
           }
         }
         ConnectState.STATE_DISCONNECT_COMPLETE -> {
-          setLastState(ConnectState.connecting)
-          executeConnect()
+          if (isConnectRequired) {
+            setLastState(ConnectState.connecting)
+            executeConnect()
+          }
         }
         ConnectState.STATE_RETRY_CONNECTING -> {
           if (waitRetry) {
             waitRetry = false
-            executeConnect()
+
+            if (isConnectRequired) {
+              executeConnect()
+            } else {
+              setLastState(ConnectState.disconnectComplete(isSuccess = true))
+            }
           }
         }
       }
@@ -393,8 +410,11 @@ class ConnectManager(handler: ConnectHandler? = null) {
     if (currentState == null) {
       if (waitConnect) {
         waitConnect = false
-        setLastState(ConnectState.connecting)
-        executeConnect()
+
+        if (isConnectRequired) {
+          setLastState(ConnectState.connecting)
+          executeConnect()
+        }
       }
       return
     }
@@ -438,19 +458,40 @@ class ConnectManager(handler: ConnectHandler? = null) {
     if (currentState == null) {
       if (waitConnect) {
         waitConnect = false
-        setLastState(ConnectState.connecting)
-        executeConnect()
+
+        if (isConnectRequired) {
+          setLastState(ConnectState.connecting)
+          executeConnect()
+        }
       }
       return
     }
 
     when(currentState.stateValue) {
       ConnectState.STATE_CONNECTING -> {
-        if (!isConnectRequired) {
-          waitDisconnect = true
+        waitDisconnect = !isConnectRequired
+      }
+      ConnectState.STATE_CONNECT_COMPLETE -> {
+        if (currentState.isSuccess) {
+          if (isConnectRequired) {
+            if (forceConnect) {
+              waitConnect = true
+              setLastState(ConnectState.disconnecting)
+              executeDisconnect()
+            }
+          } else {
+            setLastState(ConnectState.disconnecting)
+            executeDisconnect()
+          }
+        } else {
+          if (isConnectRequired) {
+            setLastState(ConnectState.connecting)
+            executeConnect()
+          } else {
+            setLastState(ConnectState.disconnectComplete(isSuccess = true))
+          }
         }
       }
-      ConnectState.STATE_CONNECT_COMPLETE,
       ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
         if (currentState.isSuccess) {
           if (forceConnect) {
@@ -464,22 +505,28 @@ class ConnectManager(handler: ConnectHandler? = null) {
         }
       }
       ConnectState.STATE_DISCONNECT_COMPLETE -> {
-        if (waitConnect) {
-          waitConnect = false
-        } else {
-          waitRetry = false
+        if (isConnectRequired) {
+          if (waitConnect) {
+            waitConnect = false
+          } else {
+            waitRetry = false
+          }
+          setLastState(ConnectState.connecting)
+          executeConnect()
         }
-        setLastState(ConnectState.connecting)
-        executeConnect()
       }
       ConnectState.STATE_RETRY_CONNECTING -> {
         if (waitRetry) {
           waitRetry = false
 
-          if (currentState.retryCount != 0) {
-            setLastState(ConnectState.connectingRetry(0))
+          if (isConnectRequired) {
+            if (currentState.retryCount != 0) {
+              setLastState(ConnectState.connectingRetry(0))
+            }
+            executeConnect()
+          } else {
+            setLastState(ConnectState.disconnectComplete(isSuccess = true))
           }
-          executeConnect()
         } else {
           if (currentState.retryCount != 0) {
             setLastState(ConnectState.connectingRetry(0))
@@ -524,7 +571,13 @@ class ConnectManager(handler: ConnectHandler? = null) {
       if (connectEnabled) {
         when(currentState.stateValue) {
           ConnectState.STATE_CONNECTING -> {
-            setLastState(ConnectState.connectComplete(isSuccess = true))
+            if (waitDisconnect) {
+              waitDisconnect = false
+              setLastState(ConnectState.disconnecting)
+              executeDisconnect()
+            } else {
+              setLastState(ConnectState.connectComplete(isSuccess = true))
+            }
           }
           ConnectState.STATE_RETRY_CONNECTING -> {
             if (!waitRetry) {
@@ -581,9 +634,17 @@ class ConnectManager(handler: ConnectHandler? = null) {
       if (connectEnabled) {
         when(currentState.stateValue) {
           ConnectState.STATE_CONNECTING -> {
-            matchRetry(0, {
-              setLastState(ConnectState.connectComplete(isSuccess = false, error = error))
-            })
+            if (waitDisconnect) {
+              waitDisconnect = false
+
+              matchRetry(0, {
+                setLastState(ConnectState.disconnectComplete(isSuccess = true))
+              })
+            } else {
+              matchRetry(0, {
+                setLastState(ConnectState.connectComplete(isSuccess = false, error = error))
+              })
+            }
           }
           ConnectState.STATE_RETRY_CONNECTING -> {
             if (!waitRetry) {
@@ -715,7 +776,13 @@ class ConnectManager(handler: ConnectHandler? = null) {
     if (!connectPaused) {
       if (connectEnabled) {
         when(currentState.stateValue) {
-          ConnectState.STATE_CONNECTING,
+          ConnectState.STATE_CONNECTING -> {
+            waitDisconnect = false
+
+            matchRetry(0, {
+              setLastState(ConnectState.disconnectComplete(isSuccess = true))
+            })
+          }
           ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
             matchRetry(0, {
               setLastState(ConnectState.disconnectComplete(isSuccess = true))
@@ -801,7 +868,13 @@ class ConnectManager(handler: ConnectHandler? = null) {
     if (!connectPaused) {
       if (connectEnabled) {
         when(currentState.stateValue) {
-          ConnectState.STATE_CONNECTING,
+          ConnectState.STATE_CONNECTING -> {
+            waitDisconnect = false
+
+            matchRetry(0, {
+              setLastState(ConnectState.disconnectComplete(isSuccess = false, error = error))
+            })
+          }
           ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
             matchRetry(0, {
               setLastState(ConnectState.disconnectComplete(isSuccess = false, error = error))

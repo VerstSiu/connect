@@ -27,14 +27,14 @@ open class ConnectManagerTestSeven: ConnectManagerTestSix() {
 
   // Old:
   //
-  // STATE          : null    null    null
+  // STATE          : null    null    null    null
   // SUCCESS        :
   // RETRY_COUNT    :
-  // WAIT_CONNECT   :         TRUE
+  // WAIT_CONNECT   : TRUE
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        :         TRUE
-  // PAUSED         :         TRUE    TRUE
+  // ENABLED        : TRUE    TRUE
+  // PAUSED         : TRUE                    TRUE
   //
   // STATE          : CONNECTING  CONNECTING  CONNECTING  CONNECTING  CONNECTING
   // SUCCESS        :
@@ -54,14 +54,14 @@ open class ConnectManagerTestSeven: ConnectManagerTestSix() {
   // ENABLED        : TRUE              TRUE
   // PAUSED         :
   //
-  // STATE          : DISCONNECTING DISCONNECTING DISCONNECTING DISCONNECTING
+  // STATE          : DISCONNECTING DISCONNECTING DISCONNECTING DISCONNECTING DISCONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   : TRUE          TRUE
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        : TRUE          TRUE
-  // PAUSED         :               TRUE                        TRUE
+  // ENABLED        : TRUE          TRUE          TRUE
+  // PAUSED         :               TRUE                                      TRUE
   //
   // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
   // SUCCESS        : TRUE                TRUE                TRUE                TRUE                TRUE                TRUE
