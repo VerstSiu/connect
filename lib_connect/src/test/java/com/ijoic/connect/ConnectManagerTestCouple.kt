@@ -17,7 +17,6 @@
  */
 package com.ijoic.connect
 
-import junit.framework.Assert
 import org.junit.Test
 
 /**
@@ -153,12 +152,12 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     testSingleConnect(manager)
 
     manager.connect()
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNtcSuccess(manager: ConnectManager) {
@@ -166,13 +165,13 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
 
     manager.notifyConnectSuccess()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_CONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == true)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_CONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNtcError(manager: ConnectManager) {
@@ -180,13 +179,13 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
 
     manager.notifyConnectError()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_CONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == false)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_CONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNtcErrorRetry(pair: Pair<ConnectManager, MockHandler>, s1: ((MockHandler) -> Unit)? = null) {
@@ -203,49 +202,49 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
 
     manager.notifyConnectError()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectDisconnect(manager: ConnectManager) {
     testSingleConnect(manager)
 
     manager.disconnect()
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNtdSuccess(manager: ConnectManager) {
     testSingleConnect(manager)
 
     manager.notifyDisconnectSuccess()
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNtdError(manager: ConnectManager) {
     testSingleConnect(manager)
 
     manager.notifyDisconnectSuccess()
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNtsClosed(manager: ConnectManager) {
@@ -253,13 +252,13 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
 
     manager.notifyServerClosed()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == true)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNtsClosedRetry(pair: Pair<ConnectManager, MockHandler>) {
@@ -272,13 +271,13 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
 
     manager.notifyServerClosed()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNteClosed(manager: ConnectManager) {
@@ -286,13 +285,13 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
 
     manager.notifyErrorClosed()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    Assert.assertTrue(currentState?.isSuccess == false)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectNteClosedRetry(pair: Pair<ConnectManager, MockHandler>) {
@@ -305,61 +304,61 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
 
     manager.notifyErrorClosed()
     val currentState = manager.state
-    Assert.assertTrue(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    Assert.assertTrue(currentState?.retryCount == 0)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectRtConnect(manager: ConnectManager) {
     testSingleConnect(manager)
 
     manager.retryConnect()
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectPsConnect(manager: ConnectManager) {
     testSingleConnect(manager)
 
     manager.pauseConnect()
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCoupleConnectRsConnect(manager: ConnectManager) {
     testSingleConnect(manager)
 
     manager.resumeConnect()
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCoupleConnectRfConnect(manager: ConnectManager) {
     testSingleConnect(manager)
 
     manager.refreshConnect()
-    Assert.assertTrue(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   // Current:
@@ -423,144 +422,144 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     testSinglePsConnect(manager)
 
     manager.connect()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectNtcSuccess(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.notifyConnectSuccess()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectNtcError(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.notifyConnectError()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectDisconnect(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.disconnect()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectNtdSuccess(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.notifyDisconnectSuccess()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectNtdError(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.notifyDisconnectError()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectNtsClosed(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.notifyServerClosed()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectNteClosed(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.notifyErrorClosed()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectRtConnect(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.retryConnect()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectPsConnect(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.pauseConnect()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(manager.connectPaused)
   }
 
   protected fun testCouplePsConnectRsConnect(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.resumeConnect()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
   protected fun testCouplePsConnectRfConnect(manager: ConnectManager) {
     testSinglePsConnect(manager)
 
     manager.refreshConnect()
-    Assert.assertTrue(manager.state == null)
-    Assert.assertTrue(!manager.waitConnect)
-    Assert.assertTrue(!manager.waitDisconnect)
-    Assert.assertTrue(!manager.waitRetry)
-    Assert.assertTrue(!manager.connectEnabled)
-    Assert.assertTrue(!manager.connectPaused)
+    assert(manager.state == null)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(!manager.connectPaused)
   }
 
 }
