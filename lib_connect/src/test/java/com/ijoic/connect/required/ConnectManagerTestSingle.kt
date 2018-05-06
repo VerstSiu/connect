@@ -158,7 +158,7 @@ open class ConnectManagerTestSingle {
   // ENABLED        :          TRUE
   // PAUSED         :
   //
-  //                        -> Connect, NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, RsConnect, RfConnect
+  //                        -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, RsConnect, RfConnect
   // STATE          : null     null
   // SUCCESS        :
   // RETRY_COUNT    :
