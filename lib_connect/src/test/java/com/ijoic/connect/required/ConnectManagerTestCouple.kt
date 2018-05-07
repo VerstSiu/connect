@@ -52,7 +52,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectTA  -> ConnectTA, NtdSuccess, NtdError, RtConnectTA, RsConnect, RfConnectTA
+  //                        -> ConnectTA  -> Connect, NtdSuccess, NtdError, RtConnect, RsConnect, RfConnect
   // STATE          : null     CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -62,19 +62,19 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // ENABLED        :          TRUE          TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> ConnectFA, RtConnectFA, RfConnectFA
-  // STATE          : null     CONNECTING    CONNECTING
-  // SUCCESS        :
+  //                        -> ConnectTA  -> NtcSuccessTA
+  // STATE          : null     CONNECTING    CONNECT_COMPLETE
+  // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> NtcSuccess
-  // STATE          : null     CONNECTING    CONNECT_COMPLETE
-  // SUCCESS        :                        TRUE
+  //                        -> ConnectTA  -> NtcSuccessFA
+  // STATE          : null     CONNECTING    DISCONNECTING
+  // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
@@ -117,7 +117,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :
@@ -142,9 +142,9 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // ENABLED        :          TRUE          TRUE
   // PAUSED         :                        TRUE
 
-  @Test fun testCoupleConnectTAConnectTA() = testCoupleConnectTAConnectTA(ConnectManager())
-  @Test fun testCoupleConnectTAConnectFA() = testCoupleConnectTAConnectFA(createManagerPair())
-  @Test fun testCoupleConnectTANtcSuccess() = testCoupleConnectTANtcSuccess(ConnectManager())
+  @Test fun testCoupleConnectTAConnect() = testCoupleConnectTAConnect(ConnectManager())
+  @Test fun testCoupleConnectTANtcSuccessTA() = testCoupleConnectTANtcSuccessTA(ConnectManager())
+  @Test fun testCoupleConnectTANtcSuccessFA() = testCoupleConnectTANtcSuccessFA(createManagerPair())
   @Test fun testCoupleConnectTANtcErrorT0() = testCoupleConnectTANtcErrorT0(createManagerPair())
   @Test fun testCoupleConnectTANtcErrorT1() = testCoupleConnectTANtcErrorT1(createManagerPair())
   @Test fun testCoupleConnectTANtcErrorFA() = testCoupleConnectTANtcErrorFA(createManagerPair())
@@ -157,14 +157,12 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   @Test fun testCoupleConnectTANteClosedT0() = testCoupleConnectTANteClosedT0(createManagerPair())
   @Test fun testCoupleConnectTANteClosedT1() = testCoupleConnectTANteClosedT1(createManagerPair())
   @Test fun testCoupleConnectTANteClosedFA() = testCoupleConnectTANteClosedFA(createManagerPair())
-  @Test fun testCoupleConnectTARtConnectTA() = testCoupleConnectTARtConnectTA(ConnectManager())
-  @Test fun testCoupleConnectTARtConnectFA() = testCoupleConnectTARtConnectFA(createManagerPair())
+  @Test fun testCoupleConnectTARtConnect() = testCoupleConnectTARtConnect(ConnectManager())
   @Test fun testCoupleConnectTAPsConnect() = testCoupleConnectTAPsConnect(ConnectManager())
   @Test fun testCoupleConnectTARsConnect() = testCoupleConnectTARsConnect(ConnectManager())
-  @Test fun testCoupleConnectTARfConnectTA() = testCoupleConnectTARfConnectTA(ConnectManager())
-  @Test fun testCoupleConnectTARfConnectFA() = testCoupleConnectTARfConnectFA(createManagerPair())
+  @Test fun testCoupleConnectTARfConnect() = testCoupleConnectTARfConnect(ConnectManager())
 
-  protected fun testCoupleConnectTAConnectTA(manager: ConnectManager) {
+  protected fun testCoupleConnectTAConnect(manager: ConnectManager) {
     testSingleConnectTA(manager)
 
     manager.connect()
@@ -176,29 +174,30 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testCoupleConnectTAConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testSingleConnectTA(manager)
-
-    handler.connectRequired = false
-
-    manager.connect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testCoupleConnectTANtcSuccess(manager: ConnectManager) {
+  protected fun testCoupleConnectTANtcSuccessTA(manager: ConnectManager) {
     testSingleConnectTA(manager)
 
     manager.notifyConnectSuccess()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECT_COMPLETE)
     assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testCoupleConnectTANtcSuccessFA(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testSingleConnectTA(manager)
+
+    handler.connectRequired = false
+
+    manager.notifyConnectSuccess()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
@@ -268,7 +267,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     manager.disconnect()
     assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -410,29 +409,13 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testCoupleConnectTARtConnectTA(manager: ConnectManager) {
+  protected fun testCoupleConnectTARtConnect(manager: ConnectManager) {
     testSingleConnectTA(manager)
 
     manager.retryConnect()
     assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testCoupleConnectTARtConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testSingleConnectTA(manager)
-
-    handler.connectRequired = false
-
-    manager.retryConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -462,29 +445,13 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testCoupleConnectTARfConnectTA(manager: ConnectManager) {
+  protected fun testCoupleConnectTARfConnect(manager: ConnectManager) {
     testSingleConnectTA(manager)
 
     manager.refreshConnect()
     assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testCoupleConnectTARfConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testSingleConnectTA(manager)
-
-    handler.connectRequired = false
-
-    manager.refreshConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -788,17 +755,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> PsConnect -> ConnectTA
-  // STATE          : null     null         null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                       TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                       TRUE
-  // PAUSED         :          TRUE         TRUE
-  //
-  //                        -> PsConnect -> ConnectFA
+  //                        -> PsConnect -> Connect
   // STATE          : null     null         null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -808,7 +765,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // ENABLED        :                       TRUE
   // PAUSED         :          TRUE         TRUE
   //
-  //                        -> PsConnect -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect
+  //                        -> PsConnect -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect, RfConnect
   // STATE          : null     null         null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -818,7 +775,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // ENABLED        :
   // PAUSED         :          TRUE         TRUE
   //
-  //                        -> PsConnect -> RsConnect, RfConnect
+  //                        -> PsConnect -> RsConnect
   // STATE          : null     null         null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -828,8 +785,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // ENABLED        :
   // PAUSED         :          TRUE
 
-  @Test fun testCouplePsConnectConnectTA() = testCouplePsConnectConnectTA(ConnectManager())
-  @Test fun testCouplePsConnectConnectFA() = testCouplePsConnectConnectFA(createManagerPair())
+  @Test fun testCouplePsConnectConnect() = testCouplePsConnectConnect(createManagerPair())
   @Test fun testCouplePsConnectNtcSuccess() = testCouplePsConnectNtcSuccess(ConnectManager())
   @Test fun testCouplePsConnectNtcError() = testCouplePsConnectNtcError(ConnectManager())
   @Test fun testCouplePsConnectDisconnect() = testCouplePsConnectDisconnect(ConnectManager())
@@ -842,24 +798,9 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   @Test fun testCouplePsConnectRsConnect() = testCouplePsConnectRsConnect(ConnectManager())
   @Test fun testCouplePsConnectRfConnect() = testCouplePsConnectRfConnect(ConnectManager())
 
-  protected fun testCouplePsConnectConnectTA(manager: ConnectManager) {
-    testSinglePsConnect(manager)
-
-    manager.connect()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testCouplePsConnectConnectFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testCouplePsConnectConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    val handler = pair.second
     testSinglePsConnect(manager)
-
-    handler.connectRequired = false
 
     manager.connect()
     assert(manager.state == null)
@@ -999,7 +940,7 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
 }

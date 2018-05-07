@@ -62,29 +62,18 @@ open class ConnectManagerTestSingle {
   // Retry connect
   // Refresh connect
 
-  // State Maps(with retry, always connect required):
-  // Connect [enabled] -> connect success       [enabled]
-  //                      connect error         [enabled] >> retry
-  //                      server/error closed   [enabled] >> retry
-  //
-  // Disconnect [disabled] -> disconnect success/error [disabled]
-  //                          server/error closed      [disabled]
-  //
-  // Pause connect <-> Resume connect
-  // Retry connect
-  // Refresh connect
+  // States:
+  // Connect: connect anyway
+  // Disconnect: disconnect anyway
+  // Retry connect: connect [when resume][enabled][not connect]
+  // Pause connect: disconnect and append wait connect when needed [resume -> pause]
+  // Resume connect: restart connect when needed [pause -> resume]
+  // Refresh connect: connect and reset retry connect count [when resume][enabled][not connect or retry connecting]
 
-  // State Maps(with retry, changed required):
-  // Connect [enabled] -> connect success       [enabled]
-  //                      connect error         [enabled + required] >> retry
-  //                      server/error closed   [enabled + required] >> retry
-  //
-  // Disconnect [disabled] -> disconnect success/error [disabled]
-  //                          server/error closed      [disabled]
-  //
-  // Pause connect <-> Resume connect
-  // Retry connect
-  // Refresh connect
+  // Trigger retry connect [when resume][enabled][retry enabled][connect required]:
+  // Connect error
+  // Disconnect success/error
+  // Server/error closed
 
   // Tool methods
 

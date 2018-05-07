@@ -29,23 +29,23 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
 
   // Old:
   //
-  // STATE          : null    null    null    null    null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   : TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        : TRUE    TRUE    TRUE
-  // PAUSED         : TRUE            TRUE            TRUE
-  //
-  // STATE          : CONNECTING  CONNECTING  CONNECTING  CONNECTING  CONNECTING  CONNECTING
+  // STATE          : null    null    null    null
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT: TRUE        TRUE        TRUE        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        :                         TRUE        TRUE        TRUE        TRUE
-  // PAUSED         :             TRUE                    TRUE                    TRUE
+  // ENABLED        : TRUE    TRUE
+  // PAUSED         :         TRUE            TRUE
+  //
+  // STATE          : CONNECTING  CONNECTING  CONNECTING  CONNECTING
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        : TRUE        TRUE
+  // PAUSED         :             TRUE                    TRUE
   //
   // STATE          : CONNECT_COMPLETE
   // SUCCESS        : TRUE
@@ -68,29 +68,29 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // STATE          : DISCONNECTING DISCONNECTING DISCONNECTING DISCONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
-  // WAIT_CONNECT   : TRUE          TRUE
+  // WAIT_CONNECT   : TRUE
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        : TRUE          TRUE          TRUE
-  // PAUSED         :               TRUE
+  // PAUSED         :                             TRUE
   //
-  // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
-  // SUCCESS        : TRUE                TRUE                TRUE                TRUE
+  // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
+  // SUCCESS        : TRUE                TRUE                TRUE
   // RETRY_COUNT    :
-  // WAIT_CONNECT   : TRUE
+  // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        : TRUE                TRUE                TRUE
-  // PAUSED         : TRUE                                    TRUE
+  // ENABLED        : TRUE                TRUE
+  // PAUSED         :                     TRUE
   //
-  // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
-  // SUCCESS        : FALSE               FALSE               FALSE               FALSE
+  // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
+  // SUCCESS        : FALSE               FALSE               FALSE
   // RETRY_COUNT    :
-  // WAIT_CONNECT   : TRUE
+  // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        : TRUE                TRUE                TRUE
-  // PAUSED         : TRUE                                    TRUE
+  // ENABLED        : TRUE                TRUE
+  // PAUSED         :                     TRUE
   //
   // STATE          : RETRY_CONNECTING  RETRY_CONNECTING
   // SUCCESS        :

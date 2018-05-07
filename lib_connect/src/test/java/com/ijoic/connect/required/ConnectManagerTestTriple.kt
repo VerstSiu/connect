@@ -48,420 +48,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // PAUSED         :
 
   // Current:
-  //                        -> ConnectTA  -> ConnectFA
-  // STATE          : null     CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE
-  // PAUSED         :
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
-  //                        -> ConnectTA  -> ConnectFA  -> ConnectTA, RtConnectTA, RfConnectTA
-  // STATE          : null     CONNECTING    CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :
-  //
-  //                        -> ConnectTA  -> ConnectFA  -> ConnectFA, NtdSuccess, NtdError, RtConnectFA, RsConnect, RfConnectFA
-  // STATE          : null     CONNECTING    CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE          TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :
-  //
-  //                        -> ConnectTA  -> ConnectFA  -> NtcSuccess, NtcError
-  // STATE          : null     CONNECTING    CONNECTING    DISCONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :
-  //
-  //                        -> ConnectTA  -> ConnectFA  -> Disconnect
-  // STATE          : null     CONNECTING    CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE          TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE
-  // PAUSED         :
-  //
-  //                        -> ConnectTA  -> ConnectFA  -> NtsClosed(true,0), NtsClosedFA
-  // STATE          : null     CONNECTING    CONNECTING    DISCONNECT_COMPLETE
-  // SUCCESS        :                                      TRUE
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :
-  //
-  //                        -> ConnectTA  -> ConnectFA  -> NtsClosed(true,1), NteClosed(true,1)
-  // STATE          : null     CONNECTING    CONNECTING    RETRY_CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :                                      0
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
-  // WAIT_RETRY     :                                      TRUE
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :
-  //
-  //                        -> ConnectTA  -> ConnectFA  -> NteClosed(true,0), NteClosedFA
-  // STATE          : null     CONNECTING    CONNECTING    DISCONNECT_COMPLETE
-  // SUCCESS        :                                      FALSE
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :
-  //
-  //                        -> ConnectTA  -> ConnectFA  -> PsConnect
-  // STATE          : null     CONNECTING    CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE          TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :                                      TRUE
-
-  @Test fun testTripleConnectTAConnectFAConnectTA() = testTripleConnectTAConnectFAConnectTA(createManagerPair())
-  @Test fun testTripleConnectTAConnectFAConnectFA() = testTripleConnectTAConnectFAConnectFA(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANtcSuccess() = testTripleConnectTAConnectFANtcSuccess(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANtcError() = testTripleConnectTAConnectFANtcError(createManagerPair())
-  @Test fun testTripleConnectTAConnectFADisconnect() = testTripleConnectTAConnectFADisconnect(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANtdSuccess() = testTripleConnectTAConnectFANtdSuccess(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANtdError() = testTripleConnectTAConnectFANtdError(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANtsClosedT0() = testTripleConnectTAConnectFANtsClosedT0(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANtsClosedT1() = testTripleConnectTAConnectFANtsClosedT1(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANtsClosedFA() = testTripleConnectTAConnectFANtsClosedFA(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANteClosedT0() = testTripleConnectTAConnectFANteClosedT0(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANteClosedT1() = testTripleConnectTAConnectFANteClosedT1(createManagerPair())
-  @Test fun testTripleConnectTAConnectFANteClosedFA() = testTripleConnectTAConnectFANteClosedFA(createManagerPair())
-  @Test fun testTripleConnectTAConnectFARtConnectTA() = testTripleConnectTAConnectFARtConnectTA(createManagerPair())
-  @Test fun testTripleConnectTAConnectFARtConnectFA() = testTripleConnectTAConnectFARtConnectFA(createManagerPair())
-  @Test fun testTripleConnectTAConnectFAPsConnect() = testTripleConnectTAConnectFAPsConnect(createManagerPair())
-  @Test fun testTripleConnectTAConnectFARsConnect() = testTripleConnectTAConnectFARsConnect(createManagerPair())
-  @Test fun testTripleConnectTAConnectFARfConnectTA() = testTripleConnectTAConnectFARfConnectTA(createManagerPair())
-  @Test fun testTripleConnectTAConnectFARfConnectFA() = testTripleConnectTAConnectFARfConnectFA(createManagerPair())
-
-  protected fun testTripleConnectTAConnectFAConnectTA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = true
-
-    manager.connect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFAConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = false
-
-    manager.connect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANtcSuccess(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testCoupleConnectTAConnectFA(pair)
-
-    manager.notifyConnectSuccess()
-    assert(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANtcError(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testCoupleConnectTAConnectFA(pair)
-
-    manager.notifyConnectError()
-    assert(manager.state?.stateValue == ConnectState.STATE_DISCONNECTING)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFADisconnect(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testCoupleConnectTAConnectFA(pair)
-
-    manager.disconnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(!manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANtdSuccess(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testCoupleConnectTAConnectFA(pair)
-
-    manager.notifyDisconnectSuccess()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANtdError(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testCoupleConnectTAConnectFA(pair)
-
-    manager.notifyDisconnectError()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANtsClosedT0(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = true
-    handler.maxRetry = 0
-
-    manager.notifyServerClosed()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    assert(currentState?.isSuccess == true)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANtsClosedT1(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = true
-    handler.maxRetry = 1
-
-    manager.notifyServerClosed()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    assert(currentState?.retryCount == 0)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANtsClosedFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = false
-
-    manager.notifyServerClosed()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    assert(currentState?.isSuccess == true)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANteClosedT0(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = true
-    handler.maxRetry = 0
-
-    manager.notifyErrorClosed()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    assert(currentState?.isSuccess == false)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANteClosedT1(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = true
-    handler.maxRetry = 1
-
-    manager.notifyErrorClosed()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    assert(currentState?.retryCount == 0)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFANteClosedFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = false
-
-    manager.notifyErrorClosed()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    assert(currentState?.isSuccess == false)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFARtConnectTA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = true
-
-    manager.retryConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFARtConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = false
-
-    manager.retryConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFAPsConnect(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testCoupleConnectTAConnectFA(pair)
-
-    manager.pauseConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFARsConnect(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    testCoupleConnectTAConnectFA(pair)
-
-    manager.resumeConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFARfConnectTA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = true
-
-    manager.refreshConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAConnectFARfConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAConnectFA(pair)
-
-    handler.connectRequired = false
-
-    manager.refreshConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  // Current:
-  //                        -> ConnectTA  -> NtcSuccess
+  //                        -> ConnectTA  -> NtcSuccessTA
   // STATE          : null     CONNECTING    CONNECT_COMPLETE
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
@@ -474,7 +61,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectTA  -> NtcSuccess       -> ConnectTA, NtcSuccess, NtcError, NtdSuccess, NtdError, RtConnectTA, RsConnect, RfConnectFFTA
+  //                        -> ConnectTA  -> NtcSuccessTA     -> ConnectTA, NtcSuccess, NtcError, NtdSuccess, NtdError, RtConnectTA, RsConnect, RfConnectFFTA
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    CONNECT_COMPLETE
   // SUCCESS        :                        TRUE                TRUE
   // RETRY_COUNT    :
@@ -484,7 +71,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE          TRUE                TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> NtcSuccess       -> ConnectFA, RtConnectFA, RfConnectFA
+  //                        -> ConnectTA  -> NtcSuccessTA     -> ConnectFA, RtConnectFA, RfConnectFA
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECTING
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
@@ -494,7 +81,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE          TRUE                TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> NtcSuccess       -> Disconnect
+  //                        -> ConnectTA  -> NtcSuccessTA     -> Disconnect
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECTING
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
@@ -504,7 +91,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE          TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> NtcSuccess       -> NtsClosed(true,0), NtsClosedFA
+  //                        -> ConnectTA  -> NtcSuccessTA     -> NtsClosed(true,0), NtsClosedFA
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                        TRUE                TRUE
   // RETRY_COUNT    :
@@ -514,7 +101,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE          TRUE                TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> NtcSuccess       -> NtsClosed(true,1), NteClosed(true,1)
+  //                        -> ConnectTA  -> NtcSuccessTA     -> NtsClosed(true,1), NteClosed(true,1)
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    RETRY_CONNECTING
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :                                            0
@@ -524,7 +111,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE          TRUE                TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> NtcSuccess       -> NteClosed(true,0), NteClosedFA
+  //                        -> ConnectTA  -> NtcSuccessTA     -> NteClosed(true,0), NteClosedFA
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                        TRUE                FALSE
   // RETRY_COUNT    :
@@ -534,17 +121,17 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE          TRUE                TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> NtcSuccess       -> PsConnect
+  //                        -> ConnectTA  -> NtcSuccessTA     -> PsConnect
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECTING
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
-  // WAIT_CONNECT   :                                            TRUE
+  // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE                TRUE
   // PAUSED         :                                            TRUE
   //
-  //                        -> ConnectTA  -> NtcSuccess       -> RfConnectFTTA
+  //                        -> ConnectTA  -> NtcSuccessTA     -> RfConnectFTTA
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECTING
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
@@ -554,29 +141,29 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE          TRUE                TRUE
   // PAUSED         :
 
-  @Test fun testTripleConnectTANtcSuccessConnectTA() = testTripleConnectTANtcSuccessConnectTA(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessConnectFA() = testTripleConnectTANtcSuccessConnectFA(createManagerPair())
-  @Test fun testTripleConnectTANtcSuccessNtcSuccess() = testTripleConnectTANtcSuccessNtcSuccess(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessNtcError() = testTripleConnectTANtcSuccessNtcError(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessDisconnect() = testTripleConnectTANtcSuccessDisconnect(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessNtdSuccess() = testTripleConnectTANtcSuccessNtdSuccess(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessNtdError() = testTripleConnectTANtcSuccessNtdError(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessNtsClosedT0() = testTripleConnectTANtcSuccessNtsClosedT0(createManagerPair())
-  @Test fun testTripleConnectTANtcSuccessNtsClosedT1() = testTripleConnectTANtcSuccessNtsClosedT1(createManagerPair())
-  @Test fun testTripleConnectTANtcSuccessNtsClosedFA() = testTripleConnectTANtcSuccessNtsClosedFA(createManagerPair())
-  @Test fun testTripleConnectTANtcSuccessNteClosedT0() = testTripleConnectTANtcSuccessNteClosedT0(createManagerPair())
-  @Test fun testTripleConnectTANtcSuccessNteClosedT1() = testTripleConnectTANtcSuccessNteClosedT1(createManagerPair())
-  @Test fun testTripleConnectTANtcSuccessNteClosedFA() = testTripleConnectTANtcSuccessNteClosedFA(createManagerPair())
-  @Test fun testTripleConnectTANtcSuccessRtConnectTA() = testTripleConnectTANtcSuccessRtConnectTA(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessRtConnectFA() = testTripleConnectTANtcSuccessRtConnectFA(createManagerPair())
-  @Test fun testTripleConnectTANtcSuccessPsConnect() = testTripleConnectTANtcSuccessPsConnect(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessRsConnect() = testTripleConnectTANtcSuccessRsConnect(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessRfConnectFFTA() = testTripleConnectTANtcSuccessRfConnectFFTA(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessRfConnectFTTA() = testTripleConnectTANtcSuccessRfConnectFTTA(ConnectManager())
-  @Test fun testTripleConnectTANtcSuccessRfConnectFA() = testTripleConnectTANtcSuccessRfConnectFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTAConnectTA() = testTripleConnectTANtcSuccessTAConnectTA(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTAConnectFA() = testTripleConnectTANtcSuccessTAConnectFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTANtcSuccess() = testTripleConnectTANtcSuccessTANtcSuccess(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTANtcError() = testTripleConnectTANtcSuccessTANtcError(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTADisconnect() = testTripleConnectTANtcSuccessTADisconnect(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTANtdSuccess() = testTripleConnectTANtcSuccessTANtdSuccess(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTANtdError() = testTripleConnectTANtcSuccessTANtdError(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTANtsClosedT0() = testTripleConnectTANtcSuccessTANtsClosedT0(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTANtsClosedT1() = testTripleConnectTANtcSuccessTANtsClosedT1(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTANtsClosedFA() = testTripleConnectTANtcSuccessTANtsClosedFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTANteClosedT0() = testTripleConnectTANtcSuccessTANteClosedT0(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTANteClosedT1() = testTripleConnectTANtcSuccessTANteClosedT1(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTANteClosedFA() = testTripleConnectTANtcSuccessTANteClosedFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTARtConnectTA() = testTripleConnectTANtcSuccessTARtConnectTA(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTARtConnectFA() = testTripleConnectTANtcSuccessTARtConnectFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessTAPsConnect() = testTripleConnectTANtcSuccessTAPsConnect(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTARsConnect() = testTripleConnectTANtcSuccessTARsConnect(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTARfConnectFFTA() = testTripleConnectTANtcSuccessTARfConnectFFTA(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTARfConnectFTTA() = testTripleConnectTANtcSuccessTARfConnectFTTA(ConnectManager())
+  @Test fun testTripleConnectTANtcSuccessTARfConnectFA() = testTripleConnectTANtcSuccessTARfConnectFA(createManagerPair())
 
-  protected fun testTripleConnectTANtcSuccessConnectTA(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTAConnectTA(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.connect()
     val currentState = manager.state
@@ -589,10 +176,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessConnectFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTAConnectFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = false
 
@@ -606,8 +193,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNtcSuccess(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTANtcSuccess(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.notifyConnectSuccess()
     val currentState = manager.state
@@ -620,8 +207,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNtcError(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTANtcError(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.notifyConnectError()
     val currentState = manager.state
@@ -634,8 +221,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessDisconnect(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTADisconnect(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.disconnect()
     val currentState = manager.state
@@ -647,8 +234,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNtdSuccess(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTANtdSuccess(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.notifyDisconnectSuccess()
     val currentState = manager.state
@@ -661,8 +248,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNtdError(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTANtdError(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.notifyDisconnectError()
     val currentState = manager.state
@@ -675,10 +262,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNtsClosedT0(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTANtsClosedT0(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = true
     handler.maxRetry = 0
@@ -694,10 +281,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNtsClosedT1(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTANtsClosedT1(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = true
     handler.maxRetry = 1
@@ -713,10 +300,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNtsClosedFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTANtsClosedFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = false
 
@@ -731,10 +318,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNteClosedT0(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTANteClosedT0(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = true
     handler.maxRetry = 0
@@ -750,10 +337,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNteClosedT1(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTANteClosedT1(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = true
     handler.maxRetry = 1
@@ -769,10 +356,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessNteClosedFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTANteClosedFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = false
 
@@ -787,8 +374,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessRtConnectTA(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTARtConnectTA(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.retryConnect()
     val currentState = manager.state
@@ -801,10 +388,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessRtConnectFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTARtConnectFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = false
 
@@ -818,21 +405,21 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessPsConnect(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTAPsConnect(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.pauseConnect()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
-    assert(manager.waitConnect)
+    assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
     assert(manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessRsConnect(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTARsConnect(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.resumeConnect()
     val currentState = manager.state
@@ -845,8 +432,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessRfConnectFFTA(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTARfConnectFFTA(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.refreshConnect(forceConnect = false)
     val currentState = manager.state
@@ -859,8 +446,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessRfConnectFTTA(manager: ConnectManager) {
-    testCoupleConnectTANtcSuccess(manager)
+  protected fun testTripleConnectTANtcSuccessTARfConnectFTTA(manager: ConnectManager) {
+    testCoupleConnectTANtcSuccessTA(manager)
 
     manager.refreshConnect(forceConnect = true)
     val currentState = manager.state
@@ -872,12 +459,460 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessRfConnectFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectTANtcSuccessTARfConnectFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
-    testCoupleConnectTANtcSuccess(manager)
+    testCoupleConnectTANtcSuccessTA(manager)
 
     handler.connectRequired = false
+
+    manager.refreshConnect()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  // Current:
+  //                        -> ConnectTA  -> NtcSuccessFA
+  // STATE          : null     CONNECTING    DISCONNECTING
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE          TRUE
+  // PAUSED         :
+
+  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
+
+  // Test Cases:
+  //                        -> ConnectTA  -> NtcSuccessFA  -> Connect, NtcSuccess, NtcError, RtConnect, RsConnect, RfConnect
+  // STATE          : null     CONNECTING    DISCONNECTING    DISCONNECTING
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE          TRUE             TRUE
+  // PAUSED         :
+  //
+  //                        -> ConnectTA  -> NtcSuccessFA  -> Disconnect
+  // STATE          : null     CONNECTING    DISCONNECTING    DISCONNECTING
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE          TRUE
+  // PAUSED         :
+  //
+  //                        -> ConnectTA  -> NtcSuccessFA  -> NtdSuccess(true,0), NtdSuccessFA, NtsClosed(true,0), NtsClosedFA
+  // STATE          : null     CONNECTING    DISCONNECTING    DISCONNECT_COMPLETE
+  // SUCCESS        :                                         TRUE
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE          TRUE             TRUE
+  // PAUSED         :
+  //
+  //                        -> ConnectTA  -> NtcSuccessFA  -> NtdSuccess(true,1), NtdError(true,1), NtsClosed(true,1), NteClosed(true,1)
+  // STATE          : null     CONNECTING    DISCONNECTING    RETRY_CONNECTING
+  // SUCCESS        :
+  // RETRY_COUNT    :                                         0
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :                                         TRUE
+  // ENABLED        :          TRUE          TRUE             TRUE
+  // PAUSED         :
+  //
+  //                        -> ConnectTA  -> NtcSuccessFA  -> NtdError(true,0), NtErrorFA, NteClosed(true,0), NteClosedFA
+  // STATE          : null     CONNECTING    DISCONNECTING    DISCONNECT_COMPLETE
+  // SUCCESS        :                                         FALSE
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE          TRUE             TRUE
+  // PAUSED         :
+  //
+  //                        -> ConnectTA  -> NtcSuccessFA  -> PsConnect
+  // STATE          : null     CONNECTING    DISCONNECTING    DISCONNECTING
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE          TRUE             TRUE
+  // PAUSED         :                                         TRUE
+
+  @Test fun testTripleConnectTANtcSuccessFAConnect() = testTripleConnectTANtcSuccessFAConnect(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtcSuccess() = testTripleConnectTANtcSuccessFANtcSuccess(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtcError() = testTripleConnectTANtcSuccessFANtcError(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFADisconnect() = testTripleConnectTANtcSuccessFADisconnect(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtdSuccessT0() = testTripleConnectTANtcSuccessFANtdSuccessT0(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtdSuccessT1() = testTripleConnectTANtcSuccessFANtdSuccessT1(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtdSuccessFA() = testTripleConnectTANtcSuccessFANtdSuccessFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtdErrorT0() = testTripleConnectTANtcSuccessFANtdErrorT0(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtdErrorT1() = testTripleConnectTANtcSuccessFANtdErrorT1(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtdErrorFA() = testTripleConnectTANtcSuccessFANtdErrorFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtsClosedT0() = testTripleConnectTANtcSuccessFANtsClosedT0(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtsClosedT1() = testTripleConnectTANtcSuccessFANtsClosedT1(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANtsClosedFA() = testTripleConnectTANtcSuccessFANtsClosedFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANteClosedT0() = testTripleConnectTANtcSuccessFANteClosedT0(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANteClosedT1() = testTripleConnectTANtcSuccessFANteClosedT1(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFANteClosedFA() = testTripleConnectTANtcSuccessFANteClosedFA(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFARtConnect() = testTripleConnectTANtcSuccessFARtConnect(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFAPsConnect() = testTripleConnectTANtcSuccessFAPsConnect(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFARsConnect() = testTripleConnectTANtcSuccessFARsConnect(createManagerPair())
+  @Test fun testTripleConnectTANtcSuccessFARfConnect() = testTripleConnectTANtcSuccessFARfConnect(createManagerPair())
+
+  protected fun testTripleConnectTANtcSuccessFAConnect(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    manager.connect()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtcSuccess(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    manager.notifyConnectSuccess()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtcError(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    manager.notifyConnectError()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFADisconnect(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    manager.disconnect()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(!manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtdSuccessT0(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+    handler.maxRetry = 0
+
+    manager.notifyDisconnectSuccess()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtdSuccessT1(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+    handler.maxRetry = 1
+
+    manager.notifyDisconnectSuccess()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtdSuccessFA(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = false
+
+    manager.notifyDisconnectSuccess()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtdErrorT0(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+    handler.maxRetry = 0
+
+    manager.notifyDisconnectError()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtdErrorT1(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+    handler.maxRetry = 1
+
+    manager.notifyDisconnectError()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtdErrorFA(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = false
+
+    manager.notifyDisconnectError()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtsClosedT0(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+    handler.maxRetry = 0
+
+    manager.notifyServerClosed()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtsClosedT1(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+    handler.maxRetry = 1
+
+    manager.notifyServerClosed()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANtsClosedFA(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = false
+
+    manager.notifyServerClosed()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANteClosedT0(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+    handler.maxRetry = 0
+
+    manager.notifyErrorClosed()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANteClosedT1(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+    handler.maxRetry = 1
+
+    manager.notifyErrorClosed()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+    assert(currentState?.retryCount == 0)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFANteClosedFA(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = false
+
+    manager.notifyErrorClosed()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFARtConnect(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    manager.retryConnect()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFAPsConnect(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    manager.pauseConnect()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFARsConnect(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    manager.resumeConnect()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFARfConnectTA(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testCoupleConnectTANtcSuccessFA(pair)
+
+    handler.connectRequired = true
+
+    manager.refreshConnect()
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
+    assert(manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testTripleConnectTANtcSuccessFARfConnect(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    testCoupleConnectTANtcSuccessFA(pair)
 
     manager.refreshConnect()
     val currentState = manager.state
@@ -1180,7 +1215,10 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
 
   protected fun testTripleConnectTANtcErrorT0RfConnectTA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
+    val handler = pair.second
     testCoupleConnectTANtcErrorT0(pair)
+
+    handler.connectRequired = true
 
     manager.refreshConnect()
     val currentState = manager.state
@@ -1850,7 +1888,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :
@@ -1858,22 +1896,12 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectTA  -> Disconnect -> ConnectTA
+  //                        -> ConnectTA  -> Disconnect -> Connect
   // STATE          : null     CONNECTING    CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE                       TRUE
-  // PAUSED         :
-  //
-  //                        -> ConnectTA  -> Disconnect -> ConnectFA
-  // STATE          : null     CONNECTING    CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE         TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE                       TRUE
   // PAUSED         :
@@ -1883,7 +1911,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :
@@ -1893,7 +1921,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // SUCCESS        :                                      TRUE
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :
@@ -1903,7 +1931,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE          TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :
@@ -1913,7 +1941,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // SUCCESS        :                                      FALSE
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :
@@ -1923,13 +1951,12 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE          TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :                                      TRUE
 
-  @Test fun testTripleConnectTADisconnectConnectTA() = testTripleConnectTADisconnectConnectTA(ConnectManager())
-  @Test fun testTripleConnectTADisconnectConnectFA() = testTripleConnectTADisconnectConnectFA(createManagerPair())
+  @Test fun testTripleConnectTADisconnectConnect() = testTripleConnectTADisconnectConnect(ConnectManager())
   @Test fun testTripleConnectTADisconnectNtcSuccess() = testTripleConnectTADisconnectNtcSuccess(ConnectManager())
   @Test fun testTripleConnectTADisconnectNtcError() = testTripleConnectTADisconnectNtcError(ConnectManager())
   @Test fun testTripleConnectTADisconnectDisconnect() = testTripleConnectTADisconnectDisconnect(ConnectManager())
@@ -1942,7 +1969,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   @Test fun testTripleConnectTADisconnectRsConnect() = testTripleConnectTADisconnectRsConnect(ConnectManager())
   @Test fun testTripleConnectTADisconnectRfConnect() = testTripleConnectTADisconnectRfConnect(ConnectManager())
 
-  protected fun testTripleConnectTADisconnectConnectTA(manager: ConnectManager) {
+  protected fun testTripleConnectTADisconnectConnect(manager: ConnectManager) {
     testCoupleConnectTADisconnect(manager)
 
     manager.connect()
@@ -2006,7 +2033,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -2019,7 +2046,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -2032,7 +2059,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -2073,7 +2100,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -2086,7 +2113,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(manager.connectPaused)
@@ -2099,7 +2126,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -2112,7 +2139,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(!manager.connectPaused)
@@ -2442,7 +2469,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectTA  -> PsConnect  -> ConnectTA, NtdSuccess, NtdError, RtConnectTA, PsConnect
+  //                        -> ConnectTA  -> PsConnect  -> Connect, NtdSuccess, NtdError, RtConnect, PsConnect, RfConnect
   // STATE          : null     CONNECTING    CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -2452,21 +2479,11 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE          TRUE          TRUE
   // PAUSED         :                        TRUE          TRUE
   //
-  //                        -> ConnectTA  -> PsConnect  -> ConnectFA, RtConnectFA
-  // STATE          : null     CONNECTING    CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                                      TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :                        TRUE          TRUE
-  //
   //                        -> ConnectTA  -> PsConnect  -> NtcSuccess
   // STATE          : null     CONNECTING    CONNECTING    DISCONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
-  // WAIT_CONNECT   :                                      TRUE
+  // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE          TRUE
@@ -2476,7 +2493,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // STATE          : null     CONNECTING    CONNECTING    DISCONNECT_COMPLETE
   // SUCCESS        :                                      TRUE
   // RETRY_COUNT    :
-  // WAIT_CONNECT   :                                      TRUE
+  // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE          TRUE
@@ -2487,7 +2504,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                                      TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE
   // PAUSED         :                        TRUE          TRUE
@@ -2496,13 +2513,13 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // STATE          : null     CONNECTING    CONNECTING    DISCONNECT_COMPLETE
   // SUCCESS        :                                      FALSE
   // RETRY_COUNT    :
-  // WAIT_CONNECT   :                                      TRUE
+  // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE          TRUE
   // PAUSED         :                        TRUE          TRUE
   //
-  //                        -> ConnectTA  -> PsConnect  -> RsConnectTA, RfConnectTA
+  //                        -> ConnectTA  -> PsConnect  -> RsConnect
   // STATE          : null     CONNECTING    CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -2511,19 +2528,8 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE          TRUE
   // PAUSED         :                        TRUE
-  //
-  //                        -> ConnectTA  -> PsConnect  -> RsConnectFA, RfConnectFA
-  // STATE          : null     CONNECTING    CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                                      TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :                        TRUE
 
-  @Test fun testTripleConnectTAPsConnectConnectTA() = testTripleConnectTAPsConnectConnectTA(ConnectManager())
-  @Test fun testTripleConnectTAPsConnectConnectFA() = testTripleConnectTAPsConnectConnectFA(createManagerPair())
+  @Test fun testTripleConnectTAPsConnectConnect() = testTripleConnectTAPsConnectConnect(ConnectManager())
   @Test fun testTripleConnectTAPsConnectNtcSuccess() = testTripleConnectTAPsConnectNtcSuccess(ConnectManager())
   @Test fun testTripleConnectTAPsConnectNtcError() = testTripleConnectTAPsConnectNtcError(ConnectManager())
   @Test fun testTripleConnectTAPsConnectDisconnect() = testTripleConnectTAPsConnectDisconnect(ConnectManager())
@@ -2531,15 +2537,12 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   @Test fun testTripleConnectTAPsConnectNtdError() = testTripleConnectTAPsConnectNtdError(ConnectManager())
   @Test fun testTripleConnectTAPsConnectNtsClosed() = testTripleConnectTAPsConnectNtsClosed(ConnectManager())
   @Test fun testTripleConnectTAPsConnectNteClosed() = testTripleConnectTAPsConnectNteClosed(ConnectManager())
-  @Test fun testTripleConnectTAPsConnectRtConnectTA() = testTripleConnectTAPsConnectRtConnectTA(ConnectManager())
-  @Test fun testTripleConnectTAPsConnectRtConnectFA() = testTripleConnectTAPsConnectRtConnectFA(createManagerPair())
+  @Test fun testTripleConnectTAPsConnectRtConnect() = testTripleConnectTAPsConnectRtConnect(ConnectManager())
   @Test fun testTripleConnectTAPsConnectPsConnect() = testTripleConnectTAPsConnectPsConnect(ConnectManager())
-  @Test fun testTripleConnectTAPsConnectRsConnectTA() = testTripleConnectTAPsConnectRsConnectTA(ConnectManager())
-  @Test fun testTripleConnectTAPsConnectRsConnectFA() = testTripleConnectTAPsConnectRsConnectFA(createManagerPair())
-  @Test fun testTripleConnectTAPsConnectRfConnectTA() = testTripleConnectTAPsConnectRfConnectTA(ConnectManager())
-  @Test fun testTripleConnectTAPsConnectRfConnectFA() = testTripleConnectTAPsConnectRfConnectFA(createManagerPair())
+  @Test fun testTripleConnectTAPsConnectRsConnect() = testTripleConnectTAPsConnectRsConnect(ConnectManager())
+  @Test fun testTripleConnectTAPsConnectRfConnect() = testTripleConnectTAPsConnectRfConnect(ConnectManager())
 
-  protected fun testTripleConnectTAPsConnectConnectTA(manager: ConnectManager) {
+  protected fun testTripleConnectTAPsConnectConnect(manager: ConnectManager) {
     testCoupleConnectTAPsConnect(manager)
 
     manager.connect()
@@ -2575,7 +2578,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     manager.notifyConnectSuccess()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
-    assert(manager.waitConnect)
+    assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
@@ -2589,7 +2592,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
     assert(currentState?.isSuccess == true)
-    assert(manager.waitConnect)
+    assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
@@ -2603,7 +2606,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
     assert(manager.connectPaused)
@@ -2642,7 +2645,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
     assert(currentState?.isSuccess == true)
-    assert(manager.waitConnect)
+    assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
@@ -2656,19 +2659,6 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
     assert(currentState?.isSuccess == false)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAPsConnectRtConnectTA(manager: ConnectManager) {
-    testCoupleConnectTAPsConnect(manager)
-
-    manager.retryConnect()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
@@ -2676,18 +2666,14 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(manager.connectPaused)
   }
 
-  protected fun testTripleConnectTAPsConnectRtConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
+  protected fun testTripleConnectTAPsConnectRtConnect(manager: ConnectManager) {
     testCoupleConnectTAPsConnect(manager)
-
-    handler.connectRequired = false
 
     manager.retryConnect()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
     assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
+    assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
     assert(manager.connectPaused)
@@ -2706,7 +2692,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(manager.connectPaused)
   }
 
-  protected fun testTripleConnectTAPsConnectRsConnectTA(manager: ConnectManager) {
+  protected fun testTripleConnectTAPsConnectRsConnect(manager: ConnectManager) {
     testCoupleConnectTAPsConnect(manager)
 
     manager.resumeConnect()
@@ -2719,24 +2705,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTAPsConnectRsConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAPsConnect(manager)
-
-    handler.connectRequired = false
-
-    manager.resumeConnect()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAPsConnectRfConnectTA(manager: ConnectManager) {
+  protected fun testTripleConnectTAPsConnectRfConnect(manager: ConnectManager) {
     testCoupleConnectTAPsConnect(manager)
 
     manager.refreshConnect()
@@ -2746,24 +2715,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectTAPsConnectRfConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTAPsConnect(manager)
-
-    handler.connectRequired = false
-
-    manager.refreshConnect()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -2780,17 +2732,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectFA -> PsConnect -> ConnectTA, RtConnectTA
-  // STATE          : null     null         null         null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                                    TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE         TRUE         TRUE
-  // PAUSED         :                       TRUE         TRUE
-  //
-  //                        -> ConnectFA -> PsConnect -> ConnectFA, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnectFA, PsConnect
+  //                        -> ConnectFA -> PsConnect -> Connect, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnectA, RfConnect
   // STATE          : null     null         null         null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -2810,7 +2752,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE         TRUE
   // PAUSED         :                       TRUE         TRUE
   //
-  //                        -> ConnectFA -> PsConnect -> RsConnectTA, RfConnectTA
+  //                        -> ConnectFA -> PsConnect -> RsConnectTA
   // STATE          : null     null         null         CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -2820,7 +2762,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE         TRUE         TRUE
   // PAUSED         :                       TRUE
   //
-  //                        -> ConnectFA -> PsConnect -> RsConnectFA, RfConnectFA
+  //                        -> ConnectFA -> PsConnect -> RsConnectFA
   // STATE          : null     null         null         null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -2830,8 +2772,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :          TRUE         TRUE         TRUE
   // PAUSED         :                       TRUE
 
-  @Test fun testTripleConnectFAPsConnectConnectTA() = testTripleConnectFAPsConnectConnectTA(createManagerPair())
-  @Test fun testTripleConnectFAPsConnectConnectFA() = testTripleConnectFAPsConnectConnectFA(createManagerPair())
+  @Test fun testTripleConnectFAPsConnectConnect() = testTripleConnectFAPsConnectConnect(createManagerPair())
   @Test fun testTripleConnectFAPsConnectNtcSuccess() = testTripleConnectFAPsConnectNtcSuccess(createManagerPair())
   @Test fun testTripleConnectFAPsConnectNtcError() = testTripleConnectFAPsConnectNtcError(createManagerPair())
   @Test fun testTripleConnectFAPsConnectDisconnect() = testTripleConnectFAPsConnectDisconnect(createManagerPair())
@@ -2839,36 +2780,15 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   @Test fun testTripleConnectFAPsConnectNtdError() = testTripleConnectFAPsConnectNtdError(createManagerPair())
   @Test fun testTripleConnectFAPsConnectNtsClosed() = testTripleConnectFAPsConnectNtsClosed(createManagerPair())
   @Test fun testTripleConnectFAPsConnectNteClosed() = testTripleConnectFAPsConnectNteClosed(createManagerPair())
-  @Test fun testTripleConnectFAPsConnectRtConnectTA() = testTripleConnectFAPsConnectRtConnectTA(createManagerPair())
-  @Test fun testTripleConnectFAPsConnectRtConnectFA() = testTripleConnectFAPsConnectRtConnectFA(createManagerPair())
+  @Test fun testTripleConnectFAPsConnectRtConnect() = testTripleConnectFAPsConnectRtConnect(createManagerPair())
   @Test fun testTripleConnectFAPsConnectPsConnect() = testTripleConnectFAPsConnectPsConnect(createManagerPair())
   @Test fun testTripleConnectFAPsConnectRsConnectTA() = testTripleConnectFAPsConnectRsConnectTA(createManagerPair())
   @Test fun testTripleConnectFAPsConnectRsConnectFA() = testTripleConnectFAPsConnectRsConnectFA(createManagerPair())
-  @Test fun testTripleConnectFAPsConnectRfConnectTA() = testTripleConnectFAPsConnectRfConnectTA(createManagerPair())
-  @Test fun testTripleConnectFAPsConnectRfConnectFA() = testTripleConnectFAPsConnectRfConnectFA(createManagerPair())
+  @Test fun testTripleConnectFAPsConnectRfConnect() = testTripleConnectFAPsConnectRfConnect(createManagerPair())
 
-  protected fun testTripleConnectFAPsConnectConnectTA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectFAPsConnectConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    val handler = pair.second
     testCoupleConnectFAPsConnect(pair)
-
-    handler.connectRequired = true
-
-    manager.connect()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTripleConnectFAPsConnectConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectFAPsConnect(pair)
-
-    handler.connectRequired = false
 
     manager.connect()
     assert(manager.state == null)
@@ -2970,28 +2890,9 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(manager.connectPaused)
   }
 
-  protected fun testTripleConnectFAPsConnectRtConnectTA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectFAPsConnectRtConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    val handler = pair.second
     testCoupleConnectFAPsConnect(pair)
-
-    handler.connectRequired = true
-
-    manager.retryConnect()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTripleConnectFAPsConnectRtConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectFAPsConnect(pair)
-
-    handler.connectRequired = false
 
     manager.retryConnect()
     assert(manager.state == null)
@@ -3047,325 +2948,17 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectFAPsConnectRfConnectTA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testTripleConnectFAPsConnectRfConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    val handler = pair.second
     testCoupleConnectFAPsConnect(pair)
 
-    handler.connectRequired = true
-
-    manager.refreshConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTripleConnectFAPsConnectRfConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectFAPsConnect(pair)
-
-    handler.connectRequired = false
-
     manager.refreshConnect()
     assert(manager.state == null)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  // Current:
-  //                        -> PsConnect -> ConnectTA
-  // STATE          : null     null         null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                       TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                       TRUE
-  // PAUSED         :          TRUE         TRUE
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
-  //                        -> PsConnect -> ConnectTA -> ConnectTA, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnectTA, PsConnect
-  // STATE          : null     null         null         null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                       TRUE         TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                       TRUE         TRUE
-  // PAUSED         :          TRUE         TRUE         TRUE
-  //
-  //                        -> PsConnect -> ConnectTA -> ConnectFA, RtConnectFA
-  // STATE          : null     null         null         null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                       TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                       TRUE         TRUE
-  // PAUSED         :          TRUE         TRUE         TRUE
-  //
-  //                        -> PsConnect -> ConnectTA -> Disconnect
-  // STATE          : null     null         null         null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                       TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                       TRUE
-  // PAUSED         :          TRUE         TRUE         TRUE
-  //
-  //                        -> PsConnect -> ConnectTA -> RsConnectTA, RfConnectTA
-  // STATE          : null     null         null         CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                       TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                       TRUE         TRUE
-  // PAUSED         :          TRUE         TRUE
-  //
-  //                        -> PsConnect -> ConnectTA -> RsConnectFA, RfConnectFA
-  // STATE          : null     null         null         null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                       TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :                       TRUE         TRUE
-  // PAUSED         :          TRUE         TRUE
-
-  @Test fun testTriplePsConnectConnectTAConnectTA() = testTriplePsConnectConnectTAConnectTA(ConnectManager())
-  @Test fun testTriplePsConnectConnectTAConnectFA() = testTriplePsConnectConnectTAConnectFA(createManagerPair())
-  @Test fun testTriplePsConnectConnectTANtcSuccess() = testTriplePsConnectConnectTANtcSuccess(ConnectManager())
-  @Test fun testTriplePsConnectConnectTANtcError() = testTriplePsConnectConnectTANtcError(ConnectManager())
-  @Test fun testTriplePsConnectConnectTADisconnect() = testTriplePsConnectConnectTADisconnect(ConnectManager())
-  @Test fun testTriplePsConnectConnectTANtdSuccess() = testTriplePsConnectConnectTANtdSuccess(ConnectManager())
-  @Test fun testTriplePsConnectConnectTANtdError() = testTriplePsConnectConnectTANtdError(ConnectManager())
-  @Test fun testTriplePsConnectConnectTANtsClosed() = testTriplePsConnectConnectTANtsClosed(ConnectManager())
-  @Test fun testTriplePsConnectConnectTANteClosed() = testTriplePsConnectConnectTANteClosed(ConnectManager())
-  @Test fun testTriplePsConnectConnectTARtConnectTA() = testTriplePsConnectConnectTARtConnectTA(ConnectManager())
-  @Test fun testTriplePsConnectConnectTARtConnectFA() = testTriplePsConnectConnectTARtConnectFA(createManagerPair())
-  @Test fun testTriplePsConnectConnectTAPsConnect() = testTriplePsConnectConnectTAPsConnect(ConnectManager())
-  @Test fun testTriplePsConnectConnectTARsConnectTA() = testTriplePsConnectConnectTARsConnectTA(ConnectManager())
-  @Test fun testTriplePsConnectConnectTARsConnectFA() = testTriplePsConnectConnectTARsConnectFA(createManagerPair())
-  @Test fun testTriplePsConnectConnectTARfConnectTA() = testTriplePsConnectConnectTARfConnectTA(ConnectManager())
-  @Test fun testTriplePsConnectConnectTARfConnectFA() = testTriplePsConnectConnectTARfConnectFA(createManagerPair())
-
-  protected fun testTriplePsConnectConnectTAConnectTA(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.connect()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
     assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTAConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCouplePsConnectConnectTA(manager)
-
-    handler.connectRequired = false
-
-    manager.connect()
-    assert(manager.state == null)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTANtcSuccess(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.notifyConnectSuccess()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTANtcError(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.notifyConnectError()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTADisconnect(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.disconnect()
-    assert(manager.state == null)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(!manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTANtdSuccess(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.notifyDisconnectSuccess()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTANtdError(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.notifyDisconnectError()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTANtsClosed(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.notifyServerClosed()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTANteClosed(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.notifyErrorClosed()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTARtConnectTA(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.retryConnect()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTARtConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCouplePsConnectConnectTA(manager)
-
-    handler.connectRequired = false
-
-    manager.retryConnect()
-    assert(manager.state == null)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTAPsConnect(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.pauseConnect()
-    assert(manager.state == null)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTARsConnectTA(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.resumeConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTARsConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCouplePsConnectConnectTA(manager)
-
-    handler.connectRequired = false
-
-    manager.resumeConnect()
-    assert(manager.state == null)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTARfConnectTA(manager: ConnectManager) {
-    testCouplePsConnectConnectTA(manager)
-
-    manager.refreshConnect()
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testTriplePsConnectConnectTARfConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCouplePsConnectConnectTA(manager)
-
-    handler.connectRequired = false
-
-    manager.refreshConnect()
-    assert(manager.state == null)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
   }
 
 }

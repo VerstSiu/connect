@@ -29,23 +29,23 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
   // Old:
   //
-  // STATE          : null    null    null    null    null
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   : TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        : TRUE    TRUE    TRUE
-  // PAUSED         : TRUE            TRUE            TRUE
-  //
-  // STATE          : CONNECTING  CONNECTING  CONNECTING  CONNECTING
+  // STATE          : null    null    null    null
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT: TRUE        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
-  // ENABLED        :             TRUE        TRUE        TRUE
-  // PAUSED         :                                     TRUE
+  // ENABLED        : TRUE    TRUE
+  // PAUSED         :         TRUE            TRUE
+  //
+  // STATE          : CONNECTING  CONNECTING  CONNECTING
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        : TRUE        TRUE
+  // PAUSED         :             TRUE
   //
   // STATE          : CONNECT_COMPLETE
   // SUCCESS        : TRUE
@@ -58,6 +58,15 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   //
   // STATE          : CONNECT_COMPLETE
   // SUCCESS        : FALSE
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        : TRUE
+  // PAUSED         :
+  //
+  // STATE          : DISCONNECTING
+  // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
@@ -93,37 +102,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // PAUSED         :
 
   // Current:
-  //                        -> ConnectTA  -> ConnectFA  -> NtcSuccess
-  // STATE          : null     CONNECTING    CONNECTING    DISCONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
-
-  // Current:
-  //                        -> ConnectTA  -> ConnectFA  -> PsConnect
-  // STATE          : null     CONNECTING    CONNECTING    CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE          TRUE
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :                                      TRUE
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
-
-  // Current:
-  //                        -> ConnectTA  -> NtcSuccess       -> Disconnect
+  //                        -> ConnectTA  -> NtcSuccessTA     -> Disconnect
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECTING
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
@@ -138,11 +117,11 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // Test Cases:
 
   // Current:
-  //                        -> ConnectTA  -> NtcSuccess       -> PsConnect
+  //                        -> ConnectTA  -> NtcSuccessTA     -> PsConnect
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECTING
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
-  // WAIT_CONNECT   :                                            TRUE
+  // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE                TRUE
@@ -153,8 +132,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // Test Cases:
 
   // Current:
-  //
-  //                        -> ConnectTA  -> NtcSuccess       -> RfConnectFTTA
+  //                        -> ConnectTA  -> NtcSuccessTA     -> RfConnectFTTA
   // STATE          : null     CONNECTING    CONNECT_COMPLETE    DISCONNECTING
   // SUCCESS        :                        TRUE
   // RETRY_COUNT    :
@@ -219,7 +197,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // SUCCESS        :                                      FALSE
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :
@@ -234,7 +212,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:                        TRUE          TRUE
+  // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        :          TRUE
   // PAUSED         :                                      TRUE
@@ -253,36 +231,6 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // WAIT_RETRY     :
   // ENABLED        :          TRUE          TRUE                  TRUE
   // PAUSED         :                                              TRUE
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
-
-  // Current:
-  //                        -> ConnectTA  -> PsConnect  -> NtcError
-  // STATE          : null     CONNECTING    CONNECTING    DISCONNECT_COMPLETE
-  // SUCCESS        :                                      TRUE
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                                      TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :                        TRUE          TRUE
-
-  // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
-
-  // Test Cases:
-
-  // Current:
-  //                        -> ConnectTA  -> PsConnect  -> NteClosed
-  // STATE          : null     CONNECTING    CONNECTING    DISCONNECT_COMPLETE
-  // SUCCESS        :                                      FALSE
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :                                      TRUE
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :          TRUE          TRUE          TRUE
-  // PAUSED         :                        TRUE          TRUE
 
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
