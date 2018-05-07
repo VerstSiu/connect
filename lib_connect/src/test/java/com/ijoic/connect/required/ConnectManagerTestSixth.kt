@@ -20,12 +20,12 @@ package com.ijoic.connect.required
 import org.junit.Test
 
 /**
- * Connect manager test(five).
+ * Connect manager test(sixth).
  *
- * @author verstsiu on 2018/5/6.
+ * @author verstsiu on 2018/5/7.
  * @version 1.0
  */
-open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
+open class ConnectManagerTestSixth: ConnectManagerTestFifth() {
 
   // Old:
   //
@@ -65,40 +65,58 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        : TRUE
   // PAUSED         :
   //
-  // STATE          : DISCONNECTING DISCONNECTING DISCONNECTING DISCONNECTING
+  // STATE          : DISCONNECTING DISCONNECTING DISCONNECTING DISCONNECTING DISCONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
   // WAIT_CONNECT   : TRUE
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        : TRUE          TRUE          TRUE
-  // PAUSED         :                             TRUE
+  // PAUSED         :                             TRUE                        TRUE
   //
-  // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
-  // SUCCESS        : TRUE                TRUE                TRUE
+  // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
+  // SUCCESS        : TRUE                TRUE                TRUE                TRUE
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        : TRUE                TRUE
-  // PAUSED         :                     TRUE
+  // PAUSED         :                     TRUE                                    TRUE
   //
-  // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
-  // SUCCESS        : FALSE               FALSE               FALSE
+  // STATE          : DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE DISCONNECT_COMPLETE
+  // SUCCESS        : FALSE               FALSE               FALSE               FALSE
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :
   // ENABLED        : TRUE                TRUE
-  // PAUSED         :                     TRUE
+  // PAUSED         :                     TRUE                                    TRUE
   //
-  // STATE          : RETRY_CONNECTING  RETRY_CONNECTING
+  // STATE          : RETRY_CONNECTING  RETRY_CONNECTING  RETRY_CONNECTING  RETRY_CONNECTING
   // SUCCESS        :
-  // RETRY_COUNT    : 0                 0
+  // RETRY_COUNT    : 0                 0                 0                 0
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     : TRUE
-  // ENABLED        : TRUE              TRUE
+  // ENABLED        : TRUE              TRUE              TRUE
+  // PAUSED         :                                     TRUE
+  //
+  // STATE          : RETRY_CONNECT_COMPLETE
+  // SUCCESS        : TRUE
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        : TRUE
+  // PAUSED         :
+  //
+  // STATE          : RETRY_CONNECT_COMPLETE
+  // SUCCESS        : FALSE
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        : TRUE
   // PAUSED         :
 
 }

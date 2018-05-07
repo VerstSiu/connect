@@ -224,13 +224,17 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testCoupleConnectTANtcErrorT1(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testCoupleConnectTANtcErrorT1(pair: Pair<ConnectManager, MockHandler>, p1: ((MockHandler) -> Unit)? = null) {
     val manager = pair.first
     val handler = pair.second
     testSingleConnectTA(manager)
 
-    handler.connectRequired = true
-    handler.maxRetry = 1
+    if (p1 == null) {
+      handler.connectRequired = true
+      handler.maxRetry = 1
+    } else {
+      p1.invoke(handler)
+    }
 
     manager.notifyConnectError()
     val currentState = manager.state
