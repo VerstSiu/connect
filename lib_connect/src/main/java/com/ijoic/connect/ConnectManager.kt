@@ -415,20 +415,10 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * @param forceConnect force connect status.
    */
   fun refreshConnect(forceConnect: Boolean = false) {
-    connectPaused = false
-    val currentState = getLastState()
-
-    if (!connectEnabled) {
+    if (connectPaused || !connectEnabled) {
       return
     }
-    if (currentState == null) {
-      if (waitConnect) {
-        waitConnect = false
-        setLastState(ConnectState.connecting)
-        executeConnect()
-      }
-      return
-    }
+    val currentState = state ?: return
 
     when(currentState.stateValue) {
       ConnectState.STATE_CONNECT_COMPLETE,
@@ -444,28 +434,20 @@ open class ConnectManager(handler: ConnectHandler? = null) {
           executeConnect()
         }
       }
-      ConnectState.STATE_DISCONNECT_COMPLETE -> {
-        if (waitConnect) {
-          waitConnect = false
-        } else {
-          waitRetry = false
-        }
-        setLastState(ConnectState.connecting)
-        executeConnect()
-      }
       ConnectState.STATE_RETRY_CONNECTING -> {
+        val retryCount = 0
+
+        if (currentState.retryCount != retryCount) {
+          setLastState(ConnectState.connectingRetry(retryCount))
+        }
         if (waitRetry) {
           waitRetry = false
-
-          if (currentState.retryCount != 0) {
-            setLastState(ConnectState.connectingRetry(0))
-          }
-          executeConnect()
-        } else {
-          if (currentState.retryCount != 0) {
-            setLastState(ConnectState.connectingRetry(0))
-          }
+          executeRetryConnect(retryCount)
         }
+      }
+      ConnectState.STATE_DISCONNECT_COMPLETE -> {
+        setLastState(ConnectState.connecting)
+        executeConnect()
       }
     }
   }

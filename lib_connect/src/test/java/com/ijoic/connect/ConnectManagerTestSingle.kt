@@ -46,6 +46,14 @@ open class ConnectManagerTestSingle {
   // FN -> (false, negative)
   // Retry -> (true,1) or replaced
 
+  // States:
+  // Connect: connect anyway
+  // Disconnect: disconnect anyway
+  // Retry connect: connect [when resume][enabled][not connect]
+  // Pause connect: disconnect and append wait connect when needed [resume -> pause]
+  // Resume connect: restart connect when needed [pause -> resume]
+  // Refresh connect: connect and reset retry connect count [when resume][enabled][not connect or retry connecting]
+
   // Tool methods
 
   /**

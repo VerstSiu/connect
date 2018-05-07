@@ -1123,7 +1123,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> NtsClosed(*,0)      -> Connect, RtConnect, RtConnect
+  //                  Create -> Connect    -> NtsClosed(*,0)      -> Connect, RtConnect, RfConnect
   // STATE          : null      CONNECTING    DISCONNECT_COMPLETE    CONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -1584,7 +1584,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> PsConnect  -> Connect, NtdSuccess, NtdError, RtConnect, PsConnect
+  //                  Create -> Connect    -> PsConnect  -> Connect, NtdSuccess, NtdError, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -1634,7 +1634,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :           TRUE          TRUE          TRUE
   // PAUSED         :                         TRUE          TRUE
   //
-  //                  Create -> Connect    -> PsConnect  -> RsConnect, RfConnect
+  //                  Create -> Connect    -> PsConnect  -> RsConnect
   // STATE          : null      CONNECTING    CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -1804,7 +1804,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -1822,7 +1822,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> PsConnect -> Connect -> Connect, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect
+  //                  Create -> PsConnect -> Connect -> Connect, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect, RfConnect
   // STATE          : null      null         null       null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -1842,7 +1842,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // ENABLED        :                        TRUE
   // PAUSED         :           TRUE         TRUE       TRUE
   //
-  //                  Create -> PsConnect -> Connect -> RsConnect, RfConnect
+  //                  Create -> PsConnect -> Connect -> RsConnect
   // STATE          : null      null         null       CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -2001,12 +2001,12 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     testCouplePsConnectConnect(manager)
 
     manager.refreshConnect(forceConnect = false)
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
+    assert(manager.state == null)
+    assert(manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
 }

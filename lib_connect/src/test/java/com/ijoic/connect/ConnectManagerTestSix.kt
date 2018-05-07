@@ -145,7 +145,7 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
   // ENABLED        :           TRUE          TRUE                TRUE
   // PAUSED         :                                                                                     TRUE                TRUE
   //
-  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> PsConnect        -> Disconnect, NtdSuccess, NtdError, RtConnect, PsConnect
+  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> PsConnect        -> Disconnect, NtdSuccess, NtdError, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :                         0                   0                   0                   0                   0
@@ -175,7 +175,7 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
   // ENABLED        :           TRUE          TRUE                TRUE
   // PAUSED         :                                                                                     TRUE                TRUE
   //
-  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> PsConnect        -> RsConnect, RfConnect
+  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> Disconnect       -> PsConnect        -> RsConnect
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :                         0                   0                   0                   0                   0
@@ -374,7 +374,7 @@ open class ConnectManagerTestSix: ConnectManagerTestFive() {
     assert(manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
 }

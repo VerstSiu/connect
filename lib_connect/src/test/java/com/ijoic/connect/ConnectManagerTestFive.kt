@@ -116,7 +116,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE                                                  TRUE
   // PAUSED         :                                                              TRUE             TRUE
   //
-  //                  Create -> Connect    -> NtcSuccess       -> Disconnect    -> PsConnect     -> NtcSuccess, NtcError, Disconnect, RtConnect, PsConnect
+  //                  Create -> Connect    -> NtcSuccess       -> Disconnect    -> PsConnect     -> NtcSuccess, NtcError, Disconnect, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    DISCONNECTING    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -146,7 +146,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE
   // PAUSED         :                                                              TRUE             TRUE
   //
-  //                  Create -> Connect    -> NtcSuccess       -> Disconnect    -> PsConnect     -> RsConnect, RfConnect
+  //                  Create -> Connect    -> NtcSuccess       -> Disconnect    -> PsConnect     -> RsConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    DISCONNECTING    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -318,7 +318,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -345,7 +345,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE                                                              TRUE
   // PAUSED         :                                                                    TRUE                   TRUE
   //
-  //                  Create -> Connect    -> NtcError(*,0)    -> Disconnect          -> PsConnect           -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect
+  //                  Create -> Connect    -> NtcError(*,0)    -> Disconnect          -> PsConnect           -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                         FALSE               TRUE                   TRUE                   TRUE
   // RETRY_COUNT    :
@@ -355,7 +355,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE
   // PAUSED         :                                                                    TRUE                   TRUE
   //
-  //                  Create -> Connect    -> NtcError(*,0)    -> Disconnect          -> PsConnect           -> RsConnect, RfConnect
+  //                  Create -> Connect    -> NtcError(*,0)    -> Disconnect          -> PsConnect           -> RsConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                         FALSE               TRUE                   TRUE                   TRUE
   // RETRY_COUNT    :
@@ -543,7 +543,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -1475,7 +1475,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE          TRUE                TRUE                TRUE                TRUE
   // PAUSED         :                                                                 TRUE                TRUE
   //
-  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> PsConnect        -> NtdSuccess, NtdError, RtConnect, PsConnect
+  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> PsConnect        -> NtdSuccess, NtdError, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :                         0                   0                   0                   0
@@ -1529,16 +1529,6 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :                         0                   0                   0                   0
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :                         TRUE
-  // ENABLED        :           TRUE          TRUE                TRUE                TRUE                TRUE
-  // PAUSED         :                                                                 TRUE
-  //
-  //                  Create -> Connect    -> NtcError(true,1) -> RtConnect        -> PsConnect        -> RfConnect
-  // STATE          : null      CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :                         0                   0                   0                   [0]
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :                         TRUE
@@ -1733,7 +1723,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -1760,7 +1750,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE                                                                         TRUE
   // PAUSED         :                                                                 TRUE                   TRUE
   //
-  //                  Create -> Connect    -> Disconnect    -> NteClosed           -> PsConnect           -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect
+  //                  Create -> Connect    -> Disconnect    -> NteClosed           -> PsConnect           -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECTING       DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                                          FALSE                  FALSE                  FALSE
   // RETRY_COUNT    :
@@ -1770,7 +1760,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
   // ENABLED        :           TRUE
   // PAUSED         :                                                                 TRUE                   TRUE
   //
-  //                  Create -> Connect    -> Disconnect    -> NteClosed           -> PsConnect           -> RsConnect, RfConnect
+  //                  Create -> Connect    -> Disconnect    -> NteClosed           -> PsConnect           -> RsConnect
   // STATE          : null      CONNECTING    CONNECTING       DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                                          FALSE                  FALSE                  FALSE
   // RETRY_COUNT    :
@@ -1958,7 +1948,7 @@ open class ConnectManagerTestFive: ConnectManagerTestQuarter() {
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
 }

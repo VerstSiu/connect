@@ -318,7 +318,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> NtcSuccess       -> PsConnect     -> Connect, NtcSuccess, NtcError, RtConnect, PsConnect
+  //                  Create -> Connect    -> NtcSuccess       -> PsConnect     -> Connect, NtcSuccess, NtcError, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -358,7 +358,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE          TRUE                TRUE             TRUE
   // PAUSED         :                                             TRUE             TRUE
   //
-  //                  Create -> Connect    -> NtcSuccess       -> PsConnect     -> RsConnect, RfConnect
+  //                  Create -> Connect    -> NtcSuccess       -> PsConnect     -> RsConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECTING    DISCONNECTING
   // SUCCESS        :                         TRUE
   // RETRY_COUNT    :
@@ -530,7 +530,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -981,7 +981,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> NtcError(*,0)    -> PsConnect           -> Connect, RtConnect
+  //                  Create -> Connect    -> NtcError(*,0)    -> PsConnect           -> Connect, RtConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                         FALSE               TRUE                   TRUE
   // RETRY_COUNT    :
@@ -1202,12 +1202,14 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     testTripleConnectNtcErrorPsConnect(manager)
 
     manager.refreshConnect(forceConnect = false)
-    assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    val currentState = manager.state
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -1731,7 +1733,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE          TRUE                TRUE                   TRUE
   // PAUSED         :                                             TRUE                   TRUE
   //
-  //                  Create -> Connect    -> NtcError(true,1) -> PsConnect           -> NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect
+  //                  Create -> Connect    -> NtcError(true,1) -> PsConnect           -> NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    RETRY_CONNECTING    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                                             TRUE                   TRUE
   // RETRY_COUNT    :                         0                   0                      0
@@ -1758,16 +1760,6 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :                         TRUE                TRUE                   TRUE
-  // ENABLED        :           TRUE          TRUE                TRUE                   TRUE
-  // PAUSED         :                                             TRUE
-  //
-  //                  Create -> Connect    -> NtcError(true,1) -> PsConnect           -> RfConnect
-  // STATE          : null      CONNECTING    RETRY_CONNECTING    DISCONNECT_COMPLETE    CONNECTING
-  // SUCCESS        :                                             TRUE
-  // RETRY_COUNT    :                         0                   0
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :                         TRUE                TRUE
   // ENABLED        :           TRUE          TRUE                TRUE                   TRUE
   // PAUSED         :                                             TRUE
 
@@ -1963,12 +1955,14 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
     manager.refreshConnect(forceConnect = false)
     val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(currentState?.retryCount == 0)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
+    assert(manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -2239,7 +2233,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE
   // PAUSED         :                                          TRUE          TRUE
   //
-  //                  Create -> Connect    -> Disconnect    -> PsConnect  -> Disconnect, NtdSuccess, NtdError, RtConnect, PsConnect
+  //                  Create -> Connect    -> Disconnect    -> PsConnect  -> Disconnect, NtdSuccess, NtdError, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECTING       CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -2269,7 +2263,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE
   // PAUSED         :                                          TRUE          TRUE
   //
-  //                  Create -> Connect    -> Disconnect    -> PsConnect  -> RsConnect, RfConnect
+  //                  Create -> Connect    -> Disconnect    -> PsConnect  -> RsConnect
   // STATE          : null      CONNECTING    CONNECTING       CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -2448,7 +2442,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(!manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -2475,7 +2469,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE          TRUE                   TRUE                   TRUE
   // PAUSED         :                                                TRUE                   TRUE
   //
-  //                  Create -> Connect    -> NteClosed(*,0)      -> PsConnect           -> NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, PsConnect
+  //                  Create -> Connect    -> NteClosed(*,0)      -> PsConnect           -> NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, PsConnect, RfConnect
   // STATE          : null      CONNECTING    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                         FALSE                  FALSE                  FALSE
   // RETRY_COUNT    :
@@ -2498,16 +2492,6 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   //                  Create -> Connect    -> NteClosed(*,0)      -> PsConnect           -> RsConnect
   // STATE          : null      CONNECTING    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                         FALSE                  FALSE                  FALSE
-  // RETRY_COUNT    :
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :
-  // ENABLED        :           TRUE          TRUE                   TRUE                   TRUE
-  // PAUSED         :                                                TRUE
-  //
-  //                  Create -> Connect    -> NteClosed(*,0)      -> PsConnect           -> RfConnect
-  // STATE          : null      CONNECTING    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE    CONNECTING
-  // SUCCESS        :                         FALSE                  FALSE
   // RETRY_COUNT    :
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
@@ -2687,12 +2671,13 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
     manager.refreshConnect(forceConnect = false)
     val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -2709,7 +2694,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> PsConnect  -> NtcError            -> Connect, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect
+  //                  Create -> Connect    -> PsConnect  -> NtcError            -> Connect, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECTING    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                                       TRUE                   TRUE
   // RETRY_COUNT    :
@@ -2729,7 +2714,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE          TRUE          TRUE
   // PAUSED         :                         TRUE          TRUE                   TRUE
   //
-  //                  Create -> Connect    -> PsConnect  -> NtcError            -> RsConnect, RfConnect
+  //                  Create -> Connect    -> PsConnect  -> NtcError            -> RsConnect
   // STATE          : null      CONNECTING    CONNECTING    DISCONNECT_COMPLETE    CONNECTING
   // SUCCESS        :                                       TRUE
   // RETRY_COUNT    :
@@ -2910,12 +2895,13 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
     manager.refreshConnect(forceConnect = false)
     val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == true)
+    assert(manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
   // Current:
@@ -2932,7 +2918,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                  Create -> Connect    -> PsConnect  -> NteClosed           -> Connect, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect
+  //                  Create -> Connect    -> PsConnect  -> NteClosed           -> Connect, NtcSuccess, NtcError, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, PsConnect, RfConnect
   // STATE          : null      CONNECTING    CONNECTING    DISCONNECT_COMPLETE    DISCONNECT_COMPLETE
   // SUCCESS        :                                       FALSE                  FALSE
   // RETRY_COUNT    :
@@ -2952,7 +2938,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :           TRUE          TRUE          TRUE
   // PAUSED         :                         TRUE          TRUE                   TRUE
   //
-  //                  Create -> Connect    -> PsConnect  -> NtcError            -> RsConnect, RfConnect
+  //                  Create -> Connect    -> PsConnect  -> NtcError            -> RsConnect
   // STATE          : null      CONNECTING    CONNECTING    DISCONNECT_COMPLETE    CONNECTING
   // SUCCESS        :                                       FALSE
   // RETRY_COUNT    :
@@ -3133,12 +3119,13 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
 
     manager.refreshConnect(forceConnect = false)
     val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_CONNECTING)
-    assert(!manager.waitConnect)
+    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+    assert(currentState?.isSuccess == false)
+    assert(manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
     assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
+    assert(manager.connectPaused)
   }
 
 }
