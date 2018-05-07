@@ -890,8 +890,11 @@ open class ConnectManager(handler: ConnectHandler? = null) {
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> state methods :end <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
 
-  override fun toString(): String {
-    return "[${super.toString()} state: $state, wait connect: $waitConnect, wait disconnect: $waitDisconnect, wait retry: $waitRetry, enabled: $connectEnabled, paused: $connectPaused]"
+  /**
+   * Returns all related current state.
+   */
+  fun printState(): String {
+    return "[state: $state, wait connect: $waitConnect, wait disconnect: $waitDisconnect, wait retry: $waitRetry, enabled: $connectEnabled, paused: $connectPaused]"
   }
 
 }
