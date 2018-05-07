@@ -457,7 +457,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   protected fun testQuarterConnectTANtcSuccessTAPsConnectDisconnect(manager: ConnectManager) {
     testTripleConnectTANtcSuccessTAPsConnect(manager)
 
-    manager.notifyConnectError()
+    manager.disconnect()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
     assert(!manager.waitConnect)
@@ -487,7 +487,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     manager.notifyDisconnectError()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    assert(currentState?.isSuccess == true)
+    assert(currentState?.isSuccess == false)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
@@ -515,7 +515,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     manager.notifyErrorClosed()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
-    assert(currentState?.isSuccess == true)
+    assert(currentState?.isSuccess == false)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
@@ -2266,7 +2266,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   protected fun testQuarterConnectTADisconnectPsConnectNtcError(manager: ConnectManager) {
     testTripleConnectTADisconnectPsConnect(manager)
 
-    manager.notifyConnectSuccess()
+    manager.notifyConnectError()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
     assert(currentState?.isSuccess == true)
