@@ -241,7 +241,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
           }
         } else {
           if (isConnectRequired) {
-            setLastState(ConnectState.connecting)
+            setLastState(ConnectState.connectingRetry(0))
             executeConnect()
           }
         }
@@ -349,7 +349,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
           }
         } else {
           if (isConnectRequired) {
-            setLastState(ConnectState.connecting)
+            setLastState(ConnectState.connectingRetry(0))
             executeConnect()
           }
         }
@@ -499,7 +499,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
           }
         } else {
           if (isConnectRequired) {
-            setLastState(ConnectState.connecting)
+            setLastState(ConnectState.connectingRetry(0))
             executeConnect()
           }
         }
