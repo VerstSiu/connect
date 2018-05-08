@@ -1017,7 +1017,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     val manager = pair.first
     testTripleConnectTANtcErrorT0Disconnect(pair)
 
-    manager.notifyConnectSuccess()
+    manager.notifyConnectError()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
     assert(currentState?.isSuccess == true)

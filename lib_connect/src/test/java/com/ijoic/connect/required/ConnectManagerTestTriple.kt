@@ -893,23 +893,6 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testTripleConnectTANtcSuccessFARfConnectTA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testCoupleConnectTANtcSuccessFA(pair)
-
-    handler.connectRequired = true
-
-    manager.refreshConnect()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_DISCONNECTING)
-    assert(manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
   protected fun testTripleConnectTANtcSuccessFARfConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testCoupleConnectTANtcSuccessFA(pair)
@@ -1480,7 +1463,7 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
     val manager = pair.first
     testCoupleConnectTANtcErrorT1(pair)
 
-    manager.refreshConnect()
+    manager.retryConnect()
     val currentState = manager.state
     assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
     assert(currentState?.retryCount == 0)

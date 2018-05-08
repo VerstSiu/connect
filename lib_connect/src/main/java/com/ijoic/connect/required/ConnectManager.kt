@@ -582,9 +582,15 @@ open class ConnectManager(handler: ConnectHandler? = null) {
           }
         }
       } else {
-        if (currentState.stateValue == ConnectState.STATE_CONNECTING) {
-          setLastState(ConnectState.disconnecting)
-          executeDisconnect()
+        when(currentState.stateValue) {
+          ConnectState.STATE_CONNECTING -> {
+            setLastState(ConnectState.disconnecting)
+            executeDisconnect()
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            setLastState(ConnectState.disconnecting)
+            executeDisconnect()
+          }
         }
       }
     }
@@ -639,8 +645,13 @@ open class ConnectManager(handler: ConnectHandler? = null) {
           }
         }
       } else {
-        if (currentState.stateValue == ConnectState.STATE_CONNECTING) {
-          setLastState(ConnectState.disconnectComplete(isSuccess = true))
+        when(currentState.stateValue) {
+          ConnectState.STATE_CONNECTING -> {
+            setLastState(ConnectState.disconnectComplete(isSuccess = true))
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            setLastState(ConnectState.disconnectComplete(isSuccess = true))
+          }
         }
       }
     }
@@ -822,6 +833,9 @@ open class ConnectManager(handler: ConnectHandler? = null) {
           ConnectState.STATE_DISCONNECTING -> {
             setLastState(ConnectState.disconnectComplete(isSuccess = true))
           }
+          ConnectState.STATE_RETRY_CONNECTING -> {
+            setLastState(ConnectState.disconnectComplete(isSuccess = true))
+          }
         }
       }
     }
@@ -915,6 +929,9 @@ open class ConnectManager(handler: ConnectHandler? = null) {
             setLastState(ConnectState.disconnectComplete(isSuccess = false, error = error))
           }
           ConnectState.STATE_DISCONNECTING -> {
+            setLastState(ConnectState.disconnectComplete(isSuccess = false, error = error))
+          }
+          ConnectState.STATE_RETRY_CONNECTING -> {
             setLastState(ConnectState.disconnectComplete(isSuccess = false, error = error))
           }
         }

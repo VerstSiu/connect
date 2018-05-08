@@ -17,8 +17,6 @@
  */
 package com.ijoic.connect.required
 
-import org.junit.Test
-
 /**
  * Connect manager test(seventh).
  *
