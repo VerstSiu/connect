@@ -1545,27 +1545,27 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
   // ENABLED        :          TRUE          TRUE                TRUE                TRUE
   // PAUSED         :                                                                TRUE
 
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTAConnect() = testQuarterConnectTANtcErrorT1RfConnectTAConnect(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANtcSuccessTA() = testQuarterConnectTANtcErrorT1RfConnectTANtcSuccessTA(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANtcSuccessFA() = testQuarterConnectTANtcErrorT1RfConnectTANtcSuccessFA(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANtcErrorT1() = testQuarterConnectTANtcErrorT1RfConnectTANtcErrorT1(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT2RfConnectTANtcErrorT2() = testQuarterConnectTANtcErrorT2RfConnectTANtcErrorT2(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANtcErrorFA() = testQuarterConnectTANtcErrorT1RfConnectTANtcErrorFA(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTADisconnect() = testQuarterConnectTANtcErrorT1RfConnectTADisconnect(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANtdSuccess() = testQuarterConnectTANtcErrorT1RfConnectTANtdSuccess(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANtdError() = testQuarterConnectTANtcErrorT1RfConnectTANtdError(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANtsClosedT1() = testQuarterConnectTANtcErrorT1RfConnectTANtsClosedT1(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT2RfConnectTANtsClosedT2() = testQuarterConnectTANtcErrorT2RfConnectTANtsClosedT2(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANtsClosedFA() = testQuarterConnectTANtcErrorT1RfConnectTANtsClosedFA(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANteClosedT1() = testQuarterConnectTANtcErrorT1RfConnectTANteClosedT1(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT2RfConnectTANteClosedT2() = testQuarterConnectTANtcErrorT2RfConnectTANteClosedT2(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTANteClosedFA() = testQuarterConnectTANtcErrorT1RfConnectTANteClosedFA(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTARtConnect() = testQuarterConnectTANtcErrorT1RfConnectTARtConnect(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTAPsConnect() = testQuarterConnectTANtcErrorT1RfConnectTAPsConnect(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTARsConnect() = testQuarterConnectTANtcErrorT1RfConnectTARsConnect(createManagerPair())
-  @Test fun testQuarterConnectTANtcErrorT1RfConnectTARfConnect() = testQuarterConnectTANtcErrorT1RfConnectTARfConnect(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTAConnect() = testQuarterConnectTANtcErrorT1RtConnectTAConnect(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANtcSuccessTA() = testQuarterConnectTANtcErrorT1RtConnectTANtcSuccessTA(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANtcSuccessFA() = testQuarterConnectTANtcErrorT1RtConnectTANtcSuccessFA(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANtcErrorT1() = testQuarterConnectTANtcErrorT1RtConnectTANtcErrorT1(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT2RtConnectTANtcErrorT2() = testQuarterConnectTANtcErrorT2RtConnectTANtcErrorT2(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANtcErrorFA() = testQuarterConnectTANtcErrorT1RtConnectTANtcErrorFA(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTADisconnect() = testQuarterConnectTANtcErrorT1RtConnectTADisconnect(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANtdSuccess() = testQuarterConnectTANtcErrorT1RtConnectTANtdSuccess(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANtdError() = testQuarterConnectTANtcErrorT1RtConnectTANtdError(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANtsClosedT1() = testQuarterConnectTANtcErrorT1RtConnectTANtsClosedT1(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT2RtConnectTANtsClosedT2() = testQuarterConnectTANtcErrorT2RtConnectTANtsClosedT2(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANtsClosedFA() = testQuarterConnectTANtcErrorT1RtConnectTANtsClosedFA(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANteClosedT1() = testQuarterConnectTANtcErrorT1RtConnectTANteClosedT1(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT2RtConnectTANteClosedT2() = testQuarterConnectTANtcErrorT2RtConnectTANteClosedT2(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTANteClosedFA() = testQuarterConnectTANtcErrorT1RtConnectTANteClosedFA(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTARtConnect() = testQuarterConnectTANtcErrorT1RtConnectTARtConnect(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTAPsConnect() = testQuarterConnectTANtcErrorT1RtConnectTAPsConnect(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTARsConnect() = testQuarterConnectTANtcErrorT1RtConnectTARsConnect(createManagerPair())
+  @Test fun testQuarterConnectTANtcErrorT1RtConnectTARfConnect() = testQuarterConnectTANtcErrorT1RtConnectTARfConnect(createManagerPair())
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTAConnect(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTAConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
 
@@ -1580,7 +1580,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANtcSuccessTA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANtcSuccessTA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
@@ -1598,7 +1598,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANtcSuccessFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANtcSuccessFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
@@ -1615,7 +1615,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANtcErrorT1(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANtcErrorT1(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
@@ -1634,7 +1634,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT2RfConnectTANtcErrorT2(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT2RtConnectTANtcErrorT2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair, {
@@ -1656,7 +1656,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANtcErrorFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANtcErrorFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
@@ -1674,7 +1674,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTADisconnect(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTADisconnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
 
@@ -1689,7 +1689,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANtdSuccess(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANtdSuccess(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
 
@@ -1704,7 +1704,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANtdError(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANtdError(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
 
@@ -1719,7 +1719,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANtsClosedT1(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANtsClosedT1(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
@@ -1738,7 +1738,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT2RfConnectTANtsClosedT2(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT2RtConnectTANtsClosedT2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair, {
@@ -1760,7 +1760,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANtsClosedFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANtsClosedFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
@@ -1778,7 +1778,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANteClosedT1(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANteClosedT1(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
@@ -1797,7 +1797,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT2RfConnectTANteClosedT2(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT2RtConnectTANteClosedT2(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair, {
@@ -1819,7 +1819,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTANteClosedFA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTANteClosedFA(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     val handler = pair.second
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
@@ -1837,7 +1837,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTARtConnect(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTARtConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
 
@@ -1852,7 +1852,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTAPsConnect(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTAPsConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
 
@@ -1867,7 +1867,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTARsConnect(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTARsConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
 
@@ -1882,7 +1882,7 @@ open class ConnectManagerTestQuarter: ConnectManagerTestTriple() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testQuarterConnectTANtcErrorT1RfConnectTARfConnect(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testQuarterConnectTANtcErrorT1RtConnectTARfConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
     testTripleConnectTANtcErrorT1RfConnectTA(pair)
 

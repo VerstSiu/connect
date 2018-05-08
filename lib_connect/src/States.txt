@@ -1,0 +1,59 @@
+
+States:
+
+Connect         CONNECTING
+NtcSuccess      CONNECT_COMPLETE
+NtcError        DISCONNECTING
+Disconnect      DISCONNECT_COMPLETE
+NtdSuccess      RETRY_CONNECTING
+NtdError        RETRY_CONNECT_COMPLETE
+NtsClosed
+NteClosed       TRUE
+RtConnect       FALSE
+PsConnect
+RsConnect       TA    T0
+RfConnect       FA    T1
+
+connect()
+notifyConnectSuccess()
+notifyConnectError()
+disconnect()
+notifyDisconnectSuccess()
+notifyDisconnectError()
+notifyServerClosed()
+notifyErrorClosed()
+retryConnect()
+pauseConnect()
+resumeConnect()
+refreshConnect()
+
+refreshConnect(forceConnect = false)
+refreshConnect(forceConnect = true)
+
+
+assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+assert(currentState?.isSuccess == true)
+
+assert(currentState?.stateValue == ConnectState.STATE_DISCONNECT_COMPLETE)
+assert(currentState?.isSuccess == false)
+
+assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECT_COMPLETE)
+assert(currentState?.isSuccess == true)
+
+assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
+assert(currentState?.retryCount == 0)
+
+pair: Pair<ConnectManager, MockHandler>) {
+val manager = pair.first
+val handler = pair.second
+
+handler.connectRequired = false
+
+handler.connectRequired = true
+
+handler.connectRequired = true
+handler.maxRetry = 1
+
+manager: ConnectManager) {
+
+createManagerPair

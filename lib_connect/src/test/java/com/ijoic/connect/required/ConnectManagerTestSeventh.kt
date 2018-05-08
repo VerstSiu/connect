@@ -20,12 +20,12 @@ package com.ijoic.connect.required
 import org.junit.Test
 
 /**
- * Connect manager test(sixth).
+ * Connect manager test(seventh).
  *
- * @author verstsiu on 2018/5/7.
+ * @author verstsiu on 2018/5/8.
  * @version 1.0
  */
-open class ConnectManagerTestSixth: ConnectManagerTestFifth() {
+open class ConnectManagerTestSeventh: ConnectManagerTestSixth() {
 
   // Old:
   //
@@ -92,14 +92,14 @@ open class ConnectManagerTestSixth: ConnectManagerTestFifth() {
   // ENABLED        : TRUE                TRUE
   // PAUSED         :                     TRUE                                    TRUE
   //
-  // STATE          : RETRY_CONNECTING  RETRY_CONNECTING  RETRY_CONNECTING  RETRY_CONNECTING
+  // STATE          : RETRY_CONNECTING  RETRY_CONNECTING  RETRY_CONNECTING  RETRY_CONNECTING  RETRY_CONNECTING
   // SUCCESS        :
-  // RETRY_COUNT    : 0                 0                 0                 0
+  // RETRY_COUNT    : 0                 0                 0                 0                 0
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     : TRUE
   // ENABLED        : TRUE              TRUE              TRUE
-  // PAUSED         :                                     TRUE
+  // PAUSED         :                                     TRUE                                TRUE
   //
   // STATE          : RETRY_CONNECT_COMPLETE
   // SUCCESS        : TRUE
@@ -118,16 +118,5 @@ open class ConnectManagerTestSixth: ConnectManagerTestFifth() {
   // WAIT_RETRY     :
   // ENABLED        : TRUE
   // PAUSED         :
-
-  // Test Cases:
-  //                        -> ConnectTA  -> NtcError(true,1) -> RtConnectTA      -> Disconnect       -> PsConnect
-  // STATE          : null     CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
-  // SUCCESS        :
-  // RETRY_COUNT    :                        0                   0                   0                   0
-  // WAIT_CONNECT   :
-  // WAIT_DISCONNECT:
-  // WAIT_RETRY     :                        TRUE
-  // ENABLED        :          TRUE          TRUE                TRUE
-  // PAUSED         :                                                                                    TRUE
 
 }
