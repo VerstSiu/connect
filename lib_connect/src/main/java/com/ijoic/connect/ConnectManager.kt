@@ -77,6 +77,11 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     fun onRetryConnect(manager: ConnectManager, retryCount: Int)
 
     /**
+     * Returns exist connecting cancel result, default as false.
+     */
+    fun onCancelExistConnecting(): Boolean = false
+
+    /**
      * Returns connect required status.
      */
     fun isConnectRequired(): Boolean = true
@@ -182,6 +187,11 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
 
     when(currentState.stateValue) {
+      ConnectState.STATE_CONNECTING -> {
+        if (isConnectRequired && cancelExistConnecting()) {
+          executeConnect()
+        }
+      }
       ConnectState.STATE_CONNECT_COMPLETE -> {
         if (currentState.isSuccess) {
           if (!isConnectRequired) {
@@ -216,6 +226,10 @@ open class ConnectManager(handler: ConnectHandler? = null) {
             executeConnect()
           } else {
             setLastState(ConnectState.disconnectComplete(isSuccess = true))
+          }
+        } else {
+          if (isConnectRequired && cancelExistConnecting()) {
+            executeConnect()
           }
         }
       }
@@ -286,6 +300,11 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
 
     when(currentState.stateValue) {
+      ConnectState.STATE_CONNECTING -> {
+        if (isConnectRequired && cancelExistConnecting()) {
+          executeConnect()
+        }
+      }
       ConnectState.STATE_CONNECT_COMPLETE -> {
         if (currentState.isSuccess) {
           if (!isConnectRequired) {
@@ -315,6 +334,10 @@ open class ConnectManager(handler: ConnectHandler? = null) {
             executeConnect()
           } else {
             setLastState(ConnectState.disconnectComplete(isSuccess = true))
+          }
+        } else {
+          if (isConnectRequired && cancelExistConnecting()) {
+            executeConnect()
           }
         }
       }
@@ -410,6 +433,11 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
 
     when(currentState.stateValue) {
+      ConnectState.STATE_CONNECTING -> {
+        if (isConnectRequired && cancelExistConnecting()) {
+          executeConnect()
+        }
+      }
       ConnectState.STATE_CONNECT_COMPLETE -> {
         if (currentState.isSuccess) {
           if (isConnectRequired) {
@@ -450,6 +478,10 @@ open class ConnectManager(handler: ConnectHandler? = null) {
             executeConnect()
           } else {
             setLastState(ConnectState.disconnectComplete(isSuccess = true))
+          }
+        } else {
+          if (isConnectRequired && cancelExistConnecting()) {
+            executeConnect()
           }
         }
       }
@@ -496,6 +528,13 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    */
   private fun executeRetryConnect(retryCount: Int) {
     refHandler.get()?.onRetryConnect(this, retryCount)
+  }
+
+  /**
+   * Cancel exist connecting.
+   */
+  private fun cancelExistConnecting(): Boolean {
+    return refHandler.get()?.onCancelExistConnecting() ?: false
   }
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> notify methods :start <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */

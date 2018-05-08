@@ -1387,10 +1387,19 @@ open class ConnectManagerTestFifth: ConnectManagerTestQuarter() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectTA  -> NtcError(true,1) -> RtConnectTA      -> Disconnect       -> Connect
+  //                        -> ConnectTA  -> NtcError(true,1) -> RtConnectTA      -> Disconnect       -> ConnectTA
+  // STATE          : null     CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING[1]
+  // SUCCESS        :
+  // RETRY_COUNT    :                        0                   0                   0                   [0]
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :                        TRUE
+  // ENABLED        :          TRUE          TRUE                TRUE                                    TRUE
+  // PAUSED         :
+  //                        -> ConnectTA  -> NtcError(true,1) -> RtConnectTA      -> Disconnect       -> ConnectFA
   // STATE          : null     CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING
   // SUCCESS        :
-  // RETRY_COUNT    :                        0                   0                   0                   0
+  // RETRY_COUNT    :                        0                   0                   0                   [0]
   // WAIT_CONNECT   :
   // WAIT_DISCONNECT:
   // WAIT_RETRY     :                        TRUE

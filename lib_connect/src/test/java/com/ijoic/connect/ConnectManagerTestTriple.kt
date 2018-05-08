@@ -1879,7 +1879,17 @@ open class ConnectManagerTestTriple: ConnectManagerTestCouple() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectTA  -> Disconnect -> Connect
+  //                        -> ConnectTA  -> Disconnect -> ConnectTA
+  // STATE          : null     CONNECTING    CONNECTING    CONNECTING[1]
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE                       TRUE
+  // PAUSED         :
+  //
+  //                        -> ConnectTA  -> Disconnect -> ConnectFA
   // STATE          : null     CONNECTING    CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :

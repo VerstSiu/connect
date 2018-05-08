@@ -52,7 +52,17 @@ open class ConnectManagerTestCouple: ConnectManagerTestSingle() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectTA  -> Connect, NtdSuccess, NtdError, RtConnect, RsConnect, RfConnect
+  //                        -> ConnectTA  -> ConnectTA, RtConnectTA, RfConnectTA
+  // STATE          : null     CONNECTING    CONNECTING[1]
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE          TRUE
+  // PAUSED         :
+  //
+  //                        -> ConnectTA  -> ConnectFA, NtdSuccess, NtdError, RtConnectFA, RsConnect, RfConnectFA
   // STATE          : null     CONNECTING    CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
