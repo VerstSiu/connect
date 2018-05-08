@@ -228,8 +228,16 @@ open class ConnectManager(handler: ConnectHandler? = null) {
             setLastState(ConnectState.disconnectComplete(isSuccess = true))
           }
         } else {
-          if (isConnectRequired && cancelExistConnecting()) {
-            executeConnect()
+          if (isConnectRequired) {
+            val retryCount = 0
+
+            if (currentState.retryCount != retryCount) {
+              setLastState(ConnectState.connectingRetry(retryCount))
+            }
+
+            if (cancelExistConnecting()) {
+              executeConnect()
+            }
           }
         }
       }
@@ -480,8 +488,16 @@ open class ConnectManager(handler: ConnectHandler? = null) {
             setLastState(ConnectState.disconnectComplete(isSuccess = true))
           }
         } else {
-          if (isConnectRequired && cancelExistConnecting()) {
-            executeConnect()
+          if (isConnectRequired) {
+            val retryCount = 0
+
+            if (currentState.retryCount != retryCount) {
+              setLastState(ConnectState.connectingRetry(retryCount))
+            }
+
+            if (cancelExistConnecting()) {
+              executeConnect()
+            }
           }
         }
       }
