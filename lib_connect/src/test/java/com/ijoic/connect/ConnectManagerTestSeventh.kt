@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package com.ijoic.connect.required
+package com.ijoic.connect
 
 /**
  * Connect manager test(seventh).

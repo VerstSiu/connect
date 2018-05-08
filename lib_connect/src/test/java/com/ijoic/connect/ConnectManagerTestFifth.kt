@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package com.ijoic.connect.required
+package com.ijoic.connect
 
 import org.junit.Test
 

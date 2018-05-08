@@ -22,7 +22,7 @@ import org.junit.Test
 /**
  * Connect manager test(single).
  *
- * @author verstsiu on 2018/4/27.
+ * @author verstsiu on 2018/5/4.
  * @version 1.0
  */
 open class ConnectManagerTestSingle {
@@ -44,7 +44,23 @@ open class ConnectManagerTestSingle {
   // F{:Int} -> (false, Int)
   // TN -> (true, negative)
   // FN -> (false, negative)
+  // FA -> (false, any)
+  // TA -> (true, any)
   // Retry -> (true,1) or replaced
+
+  // State Behaviours:
+  // Resume: resume connect if connect required when resume from pause
+
+  // State Maps(without retry, always connect required):
+  // Connect [enabled] -> connect success/error [enabled]
+  //                      server/error closed   [enabled]
+  //
+  // Disconnect [disabled] -> disconnect success/error [disabled]
+  //                          server/error closed      [disabled]
+  //
+  // Pause connect <-> Resume connect
+  // Retry connect
+  // Refresh connect
 
   // States:
   // Connect: connect anyway
@@ -54,6 +70,11 @@ open class ConnectManagerTestSingle {
   // Resume connect: restart connect when needed [pause -> resume]
   // Refresh connect: connect and reset retry connect count [when resume][enabled][not connect or retry connecting]
 
+  // Trigger retry connect [when resume][enabled][retry enabled][connect required]:
+  // Connect error
+  // Disconnect success/error
+  // Server/error closed
+
   // Tool methods
 
   /**
@@ -62,6 +83,9 @@ open class ConnectManagerTestSingle {
   protected fun createManagerPair(): Pair<ConnectManager, MockHandler> {
     val handler = MockHandler()
     val manager = ConnectManager(handler)
+
+    handler.connectRequired = true
+    handler.maxRetry = 0
 
     return Pair(manager, handler)
   }
@@ -103,7 +127,7 @@ open class ConnectManagerTestSingle {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> Connect
+  //                        -> ConnectTA
   // STATE          : null     CONNECTING
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -113,7 +137,17 @@ open class ConnectManagerTestSingle {
   // ENABLED        :          TRUE
   // PAUSED         :
   //
-  //                        -> Connect, NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, RsConnect, RfConnect
+  //                        -> ConnectFA
+  // STATE          : null     null
+  // SUCCESS        :
+  // RETRY_COUNT    :
+  // WAIT_CONNECT   :
+  // WAIT_DISCONNECT:
+  // WAIT_RETRY     :
+  // ENABLED        :          TRUE
+  // PAUSED         :
+  //
+  //                        -> NtcSuccess, NtcError, Disconnect, NtdSuccess, NtdError, NtsClosed, NteClosed, RtConnect, RsConnect, RfConnect
   // STATE          : null     null
   // SUCCESS        :
   // RETRY_COUNT    :
@@ -133,7 +167,8 @@ open class ConnectManagerTestSingle {
   // ENABLED        :
   // PAUSED         :          TRUE
 
-  @Test fun testSingleConnect() = testSingleConnect(ConnectManager())
+  @Test fun testSingleConnectTA() = testSingleConnectTA(ConnectManager())
+  @Test fun testSingleConnectFA() = testSingleConnectFA(createManagerPair())
   @Test fun testSingleNtcSuccess() = testSingleNtcSuccess(ConnectManager())
   @Test fun testSingleNtcError() = testSingleNtcError(ConnectManager())
   @Test fun testSingleDisconnect() = testSingleDisconnect(ConnectManager())
@@ -146,11 +181,27 @@ open class ConnectManagerTestSingle {
   @Test fun testSingleRsConnect() = testSingleRsConnect(ConnectManager())
   @Test fun testSingleRfConnect() = testSingleRfConnect(ConnectManager())
 
-  protected fun testSingleConnect(manager: ConnectManager) {
+  protected fun testSingleConnectTA(manager: ConnectManager) {
     testManagerCreate(manager)
 
     manager.connect()
     assert(manager.state?.stateValue == ConnectState.STATE_CONNECTING)
+    assert(!manager.waitConnect)
+    assert(!manager.waitDisconnect)
+    assert(!manager.waitRetry)
+    assert(manager.connectEnabled)
+    assert(!manager.connectPaused)
+  }
+
+  protected fun testSingleConnectFA(pair: Pair<ConnectManager, MockHandler>) {
+    val manager = pair.first
+    val handler = pair.second
+    testManagerCreate(manager)
+
+    handler.connectRequired = false
+
+    manager.connect()
+    assert(manager.state == null)
     assert(!manager.waitConnect)
     assert(!manager.waitDisconnect)
     assert(!manager.waitRetry)
