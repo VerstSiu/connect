@@ -1001,7 +1001,7 @@ open class ConnectManagerTestFifth: ConnectManagerTestQuarter() {
   // <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<> <>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
   // Test Cases:
-  //                        -> ConnectTA  -> NtcError(true,1) -> RtConnectTA      -> NtcError(true,1)       -> ConnectTA, RtConnectTA, RfConnectTA
+  //                        -> ConnectTA  -> NtcError(true,1) -> RtConnectTA      -> NtcError(true,1)       -> ConnectTA, RfConnectTA
   // STATE          : null     CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECT_COMPLETE    RETRY_CONNECTING
   // SUCCESS        :                                                                FALSE
   // RETRY_COUNT    :                        0                   0                                             0
@@ -1011,7 +1011,7 @@ open class ConnectManagerTestFifth: ConnectManagerTestQuarter() {
   // ENABLED        :          TRUE          TRUE                TRUE                TRUE                      TRUE
   // PAUSED         :
   //
-  //                        -> ConnectTA  -> NtcError(true,1) -> RtConnectTA      -> NtcError(true,1)       -> ConnectFA, NtcSuccess, NtcError, NtdSuccess, NtdError, RtConnectFA, RsConnect, RfConnectFA
+  //                        -> ConnectTA  -> NtcError(true,1) -> RtConnectTA      -> NtcError(true,1)       -> ConnectFA, NtcSuccess, NtcError, NtdSuccess, NtdError, RtConnect, RsConnect, RfConnectFA
   // STATE          : null     CONNECTING    RETRY_CONNECTING    RETRY_CONNECTING    RETRY_CONNECT_COMPLETE    RETRY_CONNECT_COMPLETE
   // SUCCESS        :                                                                FALSE                     FALSE
   // RETRY_COUNT    :                        0                   0
@@ -1082,8 +1082,7 @@ open class ConnectManagerTestFifth: ConnectManagerTestQuarter() {
   @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1NtsClosedFA() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1NtsClosedFA(createManagerPair())
   @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1NteClosedT1() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1NteClosedT1(createManagerPair())
   @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1NteClosedFA() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1NteClosedFA(createManagerPair())
-  @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnectTA() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnectTA(createManagerPair())
-  @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnectFA() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnectFA(createManagerPair())
+  @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnect() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnect(createManagerPair())
   @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1PsConnect() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1PsConnect(createManagerPair())
   @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RsConnect() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RsConnect(createManagerPair())
   @Test fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RfConnectTA() = testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RfConnectTA(createManagerPair())
@@ -1274,30 +1273,9 @@ open class ConnectManagerTestFifth: ConnectManagerTestQuarter() {
     assert(!manager.connectPaused)
   }
 
-  protected fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnectTA(pair: Pair<ConnectManager, MockHandler>) {
+  protected fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnect(pair: Pair<ConnectManager, MockHandler>) {
     val manager = pair.first
-    val handler = pair.second
     testQuarterConnectTANtcErrorT1RtConnectTANtcErrorT1(pair)
-
-    handler.connectRequired = true
-
-    manager.retryConnect()
-    val currentState = manager.state
-    assert(currentState?.stateValue == ConnectState.STATE_RETRY_CONNECTING)
-    assert(currentState?.retryCount == 0)
-    assert(!manager.waitConnect)
-    assert(!manager.waitDisconnect)
-    assert(!manager.waitRetry)
-    assert(manager.connectEnabled)
-    assert(!manager.connectPaused)
-  }
-
-  protected fun testFifthConnectTANtcErrorT1RtConnectTANtcErrorT1RtConnectFA(pair: Pair<ConnectManager, MockHandler>) {
-    val manager = pair.first
-    val handler = pair.second
-    testQuarterConnectTANtcErrorT1RtConnectTANtcErrorT1(pair)
-
-    handler.connectRequired = false
 
     manager.retryConnect()
     val currentState = manager.state

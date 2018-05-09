@@ -350,16 +350,9 @@ open class ConnectManager(handler: ConnectHandler? = null) {
         }
       }
       ConnectState.STATE_RETRY_CONNECT_COMPLETE -> {
-        if (currentState.isSuccess) {
-          if (!isConnectRequired) {
-            setLastState(ConnectState.disconnecting)
-            executeDisconnect()
-          }
-        } else {
-          if (isConnectRequired) {
-            setLastState(ConnectState.connectingRetry(0))
-            executeConnect()
-          }
+        if (currentState.isSuccess && !isConnectRequired) {
+          setLastState(ConnectState.disconnecting)
+          executeDisconnect()
         }
       }
     }
