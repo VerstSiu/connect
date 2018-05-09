@@ -27,6 +27,7 @@ import java.lang.ref.WeakReference
  */
 open class ConnectManager(handler: ConnectHandler? = null) {
 
+  private val tag = "connect_manager"
   private val refHandler = WeakReference(handler)
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> connect handler :start <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
@@ -171,6 +172,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Connect.
    */
   fun connect() {
+    logState("connect")
     connectEnabled = true
 
     if (connectPaused) {
@@ -261,6 +263,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Disconnect.
    */
   fun disconnect() {
+    logState("disconnect")
     connectEnabled = false
 
     if (connectPaused) {
@@ -294,6 +297,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Retry connect.
    */
   fun retryConnect() {
+    logState("retry connect")
     if (connectPaused || !connectEnabled) {
       return
     }
@@ -371,6 +375,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * <p>This will close existing connection, and mark connect status to pause.</p>
    */
   fun pauseConnect() {
+    logState("pause connect")
     if (connectPaused) {
       return
     }
@@ -402,6 +407,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * <p>This will close existing connection, and mark connect status to pause.</p>
    */
   fun resumeConnect() {
+    logState("resume connect")
     if (!connectPaused) {
       return
     }
@@ -426,6 +432,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * @param forceConnect force connect status.
    */
   fun refreshConnect(forceConnect: Boolean = false) {
+    logState("refresh connect::$forceConnect")
     if (connectPaused || !connectEnabled) {
       return
     }
@@ -559,6 +566,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Notify connect success.
    */
   fun notifyConnectSuccess() {
+    logState("notify connect success")
     val currentState = getLastState() ?: return
 
     if (!connectPaused && connectEnabled) {
@@ -599,6 +607,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * @param error error.
    */
   fun notifyConnectError(error: Throwable? = null) {
+    logState("notify connect error")
     val currentState = getLastState() ?: return
 
     if (!connectPaused && connectEnabled) {
@@ -634,6 +643,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Notify disconnect success.
    */
   fun notifyDisconnectSuccess() {
+    logState("notify disconnect success")
     val currentState = getLastState() ?: return
 
     if (currentState.stateValue != ConnectState.STATE_DISCONNECTING) {
@@ -667,6 +677,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * @param error error.
    */
   fun notifyDisconnectError(error: Throwable? = null) {
+    logState("notify disconnect error")
     val currentState = getLastState() ?: return
 
     if (currentState.stateValue != ConnectState.STATE_DISCONNECTING) {
@@ -698,6 +709,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Server closed.
    */
   fun notifyServerClosed() {
+    logState("notify server closed")
     val currentState = getLastState() ?: return
 
     if (!connectPaused && connectEnabled) {
@@ -754,6 +766,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * @param error error.
    */
   fun notifyErrorClosed(error: Throwable? = null) {
+    logState("notify error closed")
     val currentState = getLastState() ?: return
 
     if (!connectPaused && connectEnabled) {
@@ -854,7 +867,11 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Returns all related current state.
    */
   fun printState(): String {
-    return "[state: $state, wait connect: $waitConnect, wait disconnect: $waitDisconnect, wait retry: $waitRetry, enabled: $connectEnabled, paused: $connectPaused]"
+    return "[state: $state, required: $isConnectRequired, max retry: ${refHandler.get()?.getMaxRetryCount()}, wait connect: $waitConnect, wait disconnect: $waitDisconnect, wait retry: $waitRetry, enabled: $connectEnabled, paused: $connectPaused]"
+  }
+
+  private fun logState(message: String) {
+    println("$tag: >. $message ${printState()}")
   }
 
 }
