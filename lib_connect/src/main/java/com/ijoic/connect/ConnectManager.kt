@@ -27,6 +27,7 @@ import java.lang.ref.WeakReference
  */
 open class ConnectManager(handler: ConnectHandler? = null) {
 
+  private val stateLock = Object()
   private val refHandler = WeakReference(handler)
 
   /* <>-<>-<>-<>-<>-<>-<>-<>-<>-<> connect handler :start <>-<>-<>-<>-<>-<>-<>-<>-<>-<> */
@@ -171,6 +172,65 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Connect.
    */
   fun connect() {
+    synchronized(stateLock) {
+      doSyncConnect()
+    }
+  }
+
+  /**
+   * Disconnect.
+   */
+  fun disconnect() {
+    synchronized(stateLock) {
+      doSyncDisconnect()
+    }
+  }
+
+  /**
+   * Retry connect.
+   */
+  fun retryConnect() {
+    synchronized(stateLock) {
+      doSyncRetryConnect()
+    }
+  }
+
+  /**
+   * Pause connect.
+   *
+   * <p>This will close existing connection, and mark connect status to pause.</p>
+   */
+  fun pauseConnect() {
+    synchronized(stateLock) {
+      doSyncPauseConnect()
+    }
+  }
+
+  /**
+   * Resume connect.
+   *
+   * <p>This will close existing connection, and mark connect status to pause.</p>
+   */
+  fun resumeConnect() {
+    synchronized(stateLock) {
+      doSyncResumeConnect()
+    }
+  }
+
+  /**
+   * Refresh connect.
+   *
+   * <p>This will refresh retry status, and create a new connection if needed(connection paused or connect, retry failed etc.).</p>
+   *
+   * @param forceConnect force connect status.
+   */
+  fun refreshConnect(forceConnect: Boolean = false) {
+    synchronized(stateLock) {
+      doSyncRefreshConnect(forceConnect)
+    }
+  }
+
+  private fun doSyncConnect() {
     connectEnabled = true
 
     if (connectPaused) {
@@ -257,10 +317,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Disconnect.
-   */
-  fun disconnect() {
+  private fun doSyncDisconnect() {
     connectEnabled = false
 
     if (connectPaused) {
@@ -290,10 +347,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Retry connect.
-   */
-  fun retryConnect() {
+  private fun doSyncRetryConnect() {
     if (connectPaused || !connectEnabled) {
       return
     }
@@ -358,12 +412,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Pause connect.
-   *
-   * <p>This will close existing connection, and mark connect status to pause.</p>
-   */
-  fun pauseConnect() {
+  private fun doSyncPauseConnect() {
     if (connectPaused) {
       return
     }
@@ -389,12 +438,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Resume connect.
-   *
-   * <p>This will close existing connection, and mark connect status to pause.</p>
-   */
-  fun resumeConnect() {
+  private fun doSyncResumeConnect() {
     if (!connectPaused) {
       return
     }
@@ -411,14 +455,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Refresh connect.
-   *
-   * <p>This will refresh retry status, and create a new connection if needed(connection paused or connect, retry failed etc.).</p>
-   *
-   * @param forceConnect force connect status.
-   */
-  fun refreshConnect(forceConnect: Boolean = false) {
+  private fun doSyncRefreshConnect(forceConnect: Boolean = false) {
     if (connectPaused || !connectEnabled) {
       return
     }
@@ -552,6 +589,63 @@ open class ConnectManager(handler: ConnectHandler? = null) {
    * Notify connect success.
    */
   fun notifyConnectSuccess() {
+    synchronized(stateLock) {
+      doSyncNotifyConnectSuccess()
+    }
+  }
+
+  /**
+   * Notify connect error.
+   *
+   * @param error error.
+   */
+  fun notifyConnectError(error: Throwable? = null) {
+    synchronized(stateLock) {
+      doSyncNotifyConnectError(error)
+    }
+  }
+
+  /**
+   * Notify disconnect success.
+   */
+  fun notifyDisconnectSuccess() {
+    synchronized(stateLock) {
+      doSyncNotifyDisconnectSuccess()
+    }
+  }
+
+  /**
+   * Notify disconnect error.
+   *
+   * @param error error.
+   */
+  fun notifyDisconnectError(error: Throwable? = null) {
+    synchronized(stateLock) {
+      doSyncNotifyDisconnectError(error)
+    }
+  }
+
+  /**
+   * Server closed.
+   */
+  fun notifyServerClosed() {
+    synchronized(stateLock) {
+      doSyncNotifyServerClosed()
+    }
+  }
+
+  /**
+   * Notify error closed.
+   *
+   * @param error error.
+   */
+  fun notifyErrorClosed(error: Throwable? = null) {
+    synchronized(stateLock) {
+      doSyncNotifyErrorClosed(error)
+    }
+  }
+
+  private fun doSyncNotifyConnectSuccess() {
     val currentState = getLastState() ?: return
 
     if (!connectPaused && connectEnabled) {
@@ -586,12 +680,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Notify connect error.
-   *
-   * @param error error.
-   */
-  fun notifyConnectError(error: Throwable? = null) {
+  private fun doSyncNotifyConnectError(error: Throwable? = null) {
     val currentState = getLastState() ?: return
 
     if (!connectPaused && connectEnabled) {
@@ -623,10 +712,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Notify disconnect success.
-   */
-  fun notifyDisconnectSuccess() {
+  private fun doSyncNotifyDisconnectSuccess() {
     val currentState = getLastState() ?: return
 
     if (currentState.stateValue != ConnectState.STATE_DISCONNECTING) {
@@ -654,12 +740,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Notify disconnect error.
-   *
-   * @param error error.
-   */
-  fun notifyDisconnectError(error: Throwable? = null) {
+  private fun doSyncNotifyDisconnectError(error: Throwable? = null) {
     val currentState = getLastState() ?: return
 
     if (currentState.stateValue != ConnectState.STATE_DISCONNECTING) {
@@ -687,10 +768,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Server closed.
-   */
-  fun notifyServerClosed() {
+  private fun doSyncNotifyServerClosed() {
     val currentState = getLastState() ?: return
 
     if (!connectPaused && connectEnabled) {
@@ -741,12 +819,7 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  /**
-   * Notify error closed.
-   *
-   * @param error error.
-   */
-  fun notifyErrorClosed(error: Throwable? = null) {
+  private fun doSyncNotifyErrorClosed(error: Throwable? = null) {
     val currentState = getLastState() ?: return
 
     if (!connectPaused && connectEnabled) {
