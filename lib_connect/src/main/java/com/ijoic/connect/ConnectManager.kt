@@ -170,10 +170,13 @@ open class ConnectManager(handler: ConnectHandler? = null) {
 
   /**
    * Connect.
+   *
+   * @param skipRequireCheck skip require check status.
    */
-  fun connect() {
+  @JvmOverloads
+  fun connect(skipRequireCheck: Boolean = false) {
     synchronized(stateLock) {
-      doSyncConnect()
+      doSyncConnect(skipRequireCheck)
     }
   }
 
@@ -230,7 +233,8 @@ open class ConnectManager(handler: ConnectHandler? = null) {
     }
   }
 
-  private fun doSyncConnect() {
+  private fun doSyncConnect(skipRequireCheck: Boolean) {
+    val isConnectRequired = skipRequireCheck || this.isConnectRequired
     connectEnabled = true
 
     if (connectPaused) {
