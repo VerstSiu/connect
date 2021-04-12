@@ -1,0 +1,11 @@
+{
+  "name": "connect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "standard-version": "^9.1.1"
+  }
+}

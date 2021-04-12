@@ -17,8 +17,8 @@
  */
 package com.ijoic.connect.lifecycle
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.ijoic.connect.ConnectManager
 import com.ijoic.connect.ConnectState
 
